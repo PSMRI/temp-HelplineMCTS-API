@@ -107,7 +107,7 @@ public class MctsCallResponseServiceImpl implements MctsCallResponseService {
 		// (callDetail.getCallDetailID());
 		// }else{
 
-		callResponseDetails = mctsCallResponseRepository.getMctsCallResponse(callDetail.getCallDetailID());
+		callResponseDetails = mctsCallResponseRepository.getMctsCallResponse(callDetail.getCzentrixCallDetailID());
 		// }
 		return callResponseDetails.toString();
 	}

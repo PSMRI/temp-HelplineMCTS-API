@@ -486,7 +486,7 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 				MctsOutboundCallDetail.class);
 		MctsOutboundCall benCall;
 		MctsOutboundCall mctsOutboundCall = mctsOutboundCallRepository
-				.findOnClientID(mctsOutboundCallDetail.getCallId());
+				.findOnClientID(mctsOutboundCallDetail.getCzentirixCallID());
 		if (mctsOutboundCall != null) {
 
 			if (mctsOutboundCall.getChildValidDataHandler() != null) {
@@ -533,7 +533,7 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 			}
 
 		MctsOutboundCallDetail call = mctsOutboundCallDetailRepository
-				.isAvailable(mctsOutboundCallDetail.getCallId(), mctsOutboundCallDetail.getAllocatedUserID());
+				.isAvailable(mctsOutboundCallDetail.getCzentirixCallID(), mctsOutboundCallDetail.getAllocatedUserID());
 		if (call == null) {
 			call = mctsOutboundCallDetailRepository.save(mctsOutboundCallDetail);
 		}
@@ -547,17 +547,17 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 				MctsOutboundCallDetail.class);
 
 		MctsOutboundCallDetail detail = mctsOutboundCallDetailRepository
-				.checkAdviseAvailable(mctsOutboundCallDetail.getCallDetailID());
+				.checkAdviseAvailable(mctsOutboundCallDetail.getCzentrixCallDetailID());
 
 		if (detail.getSmsAdvice() != null) {
 
 			mctsOutboundCallDetailRepository.appendSmsAdvise(mctsOutboundCallDetail.getSmsAdvice(),
-					mctsOutboundCallDetail.getCallDetailID());
+					mctsOutboundCallDetail.getCzentrixCallDetailID());
 
 		} else {
 
 			mctsOutboundCallDetailRepository.updateSmsAdvice(mctsOutboundCallDetail.getSmsAdvice(),
-					mctsOutboundCallDetail.getSmsPh(), mctsOutboundCallDetail.getCallDetailID());
+					mctsOutboundCallDetail.getSmsPh(), mctsOutboundCallDetail.getCzentrixCallDetailID());
 
 		}
 
@@ -620,15 +620,15 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 				MctsOutboundCallDetail.class);
 		List<ChildCongenitalAnomaliesDetail> childCongenitalAnomaliesDetails;
 		mctsOutboundCallDetail = mctsOutboundCallDetailRepository
-				.findByCallDetailID(mctsOutboundCallDetail.getCallDetailID());
+				.findByCallDetailID(mctsOutboundCallDetail.getCzentrixCallDetailID());
 		MctsOutboundCall mctsOutboundCall = mctsOutboundCallRepository
-				.findOnClientID(mctsOutboundCallDetail.getCallId());
+				.findOnClientID(mctsOutboundCallDetail.getCzentirixCallID());
 		
 		String updObj = mctsOutbondCallService.getUpdatedObject(OutputMapper.gson().toJson(mctsOutboundCall), servletRequest);
 		mctsOutboundCall = InputMapper.gson().fromJson(updObj,
 				MctsOutboundCall.class);
 		ArrayList<MctsCallResponseDetail> callResponseDetails = mctsCallResponseRepository
-				.getMctsCallResponse(mctsOutboundCallDetail.getCallDetailID());
+				.getMctsCallResponse(mctsOutboundCallDetail.getCzentrixCallDetailID());
 		results.put("mctsOutboundCallDetail", mctsOutboundCallDetail);
 		results.put("mctsOutboundCall", mctsOutboundCall);
 		results.put("callResponseDetails", callResponseDetails);

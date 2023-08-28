@@ -67,7 +67,7 @@ public class MctsOutboundCallDetailServiceImplTest {
 		mctsOutboundCall.setChildID(new Long("101"));
 		List<MctsOutboundCallDetail> list=Lists.newArrayList();
 		MctsOutboundCallDetail mctsOutboundCallDetail=new MctsOutboundCallDetail();
-		mctsOutboundCallDetail.setCallId("505");
+		mctsOutboundCallDetail.setCzentrixCallID("505");
 		list.add(mctsOutboundCallDetail);
 		doReturn(list).when(mctsOutboundCallDetailRepository).getChildCallHistory(Mockito.anyLong());
 		try {
@@ -85,7 +85,7 @@ public class MctsOutboundCallDetailServiceImplTest {
 		mctsOutboundCall.setMotherID(new Long("101"));
 		List<MctsOutboundCallDetail> list=Lists.newArrayList();
 		MctsOutboundCallDetail mctsOutboundCallDetail=new MctsOutboundCallDetail();
-		mctsOutboundCallDetail.setCallId("505");
+		mctsOutboundCallDetail.setCzentrixCallID("505");
 		list.add(mctsOutboundCallDetail);
 		doReturn(list).when(mctsOutboundCallDetailRepository).getMotherCallHistory(Mockito.anyLong());
 		try {
@@ -102,7 +102,7 @@ public class MctsOutboundCallDetailServiceImplTest {
 		MctsOutboundCall mctsOutboundCall=new MctsOutboundCall();
 		mctsOutboundCall.setAllocatedUserID(202);
 		mctsOutboundCallDetail.setMctsOutboundCall(mctsOutboundCall);
-		mctsOutboundCallDetail.setCallId("101");
+		mctsOutboundCallDetail.setCzentrixCallID("101");
 		HttpServletRequest servletRequest=mock(HttpServletRequest.class);
 		MctsDataReaderDetail rReaderDetail=new MctsDataReaderDetail();
 		rReaderDetail.setBeneficiaryRegID(new Long("1019"));
@@ -114,7 +114,7 @@ public class MctsOutboundCallDetailServiceImplTest {
 	public void getBeneficiaryDetailsTest1()
 	{
 		MctsOutboundCallDetail mctsOutboundCallDetail=new MctsOutboundCallDetail();
-		mctsOutboundCallDetail.setCallId("101");
+		mctsOutboundCallDetail.setCzentrixCallID("101");
 		HttpServletRequest servletRequest=mock(HttpServletRequest.class);
 		try {
 			String response=mctsOutboundCallDetailServiceImpl.getBeneficiaryDetails(mctsOutboundCallDetail.toString(),servletRequest);
@@ -127,7 +127,7 @@ public class MctsOutboundCallDetailServiceImplTest {
 	public void createCallHistoryTest()
 	{
 		MctsOutboundCallDetail mctsOutboundCallDetail=new MctsOutboundCallDetail();
-		mctsOutboundCallDetail.setCallId("101");
+		mctsOutboundCallDetail.setCzentrixCallID("101");
 		doReturn(mctsOutboundCallDetail).when(mctsOutboundCallDetailRepository).isAvailable(Mockito.anyString(),Mockito.anyInt());
 		try {
 			String response=mctsOutboundCallDetailServiceImpl.createCallHistory(mctsOutboundCallDetail.toString());

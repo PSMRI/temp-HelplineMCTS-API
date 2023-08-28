@@ -254,7 +254,7 @@ public class MctsOutboundCallDetail {
 	/**
 	 * @return the callDetailID
 	 */
-	public Long getCallDetailID() {
+	public Long getCzentrixCallDetailID() {
 		return callDetailID;
 	}
 
@@ -329,7 +329,7 @@ public class MctsOutboundCallDetail {
 	/**
 	 * @return the czentrixCallID
 	 */
-	public String getCallId() {
+	public String getCzentirixCallID() {
 		return czentrixCallID;
 	}
 
@@ -337,7 +337,7 @@ public class MctsOutboundCallDetail {
 	 * @param czentrixCallID
 	 *            the czentrixCallID to set
 	 */
-	public void setCallId(String czentrixCallID) {
+	public void setCzentrixCallID(String czentrixCallID) {
 		this.czentrixCallID = czentrixCallID;
 	}
 
