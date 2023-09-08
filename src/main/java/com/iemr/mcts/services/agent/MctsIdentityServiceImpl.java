@@ -78,7 +78,7 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 	 */
 	@Autowired
 	private SearchDataMapper searchDataMapper;
-	
+
 	@Autowired
 	private FileManagerRepository fileManagerRepository;
 
@@ -108,7 +108,7 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 	 */
 	private static final String SEARCHUSERBYPHONENO_URL = ConfigProperties
 			.getPropertyByName("common-api-searchuserbyphoneno-url");
-	
+
 	/**
 	 * Update URL
 	 */
@@ -215,25 +215,11 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			beneficiaryModel.setBeneficiaryIdentities(blanklist);
 			beneficiaryModel.setProviderServiceMapID(mctsOutboundCall.getProviderServiceMapID());
 			beneficiaryModel.setVanID(mctsOutboundCall.getVanID());
-			
-			if(mctsOutboundCall.getChildValidDataHandler().getDOB()!=null)
-			{
-				Timestamp dob=new Timestamp(mctsOutboundCall.getChildValidDataHandler().getDOB().getTime());
+
+			if (mctsOutboundCall.getChildValidDataHandler().getDOB() != null) {
+				Timestamp dob = new Timestamp(mctsOutboundCall.getChildValidDataHandler().getDOB().getTime());
 				beneficiaryModel.setDOB(dob);
 			}
-			
-			/*if(mctsOutboundCall.getChildValidDataHandler().getTaluka_Name()!=null)
-			{
-				Integer blockID= this.findBlockID(beneficiarySearchModal.getDistrictID(), mctsOutboundCall.getChildValidDataHandler().getTaluka_Name());
-				if(blockID>0) {
-				beneficiaryModel.getI_bendemographics().setBlockID(blockID);
-				}
-				if(mctsOutboundCall.getChildValidDataHandler().getVillage_Name()!=null && blockID>0)
-				{
-					Integer villageID = this.findVillageID(blockID, mctsOutboundCall.getChildValidDataHandler().getVillage_Name());
-					beneficiaryModel.getI_bendemographics().setDistrictBranchID(villageID);
-				}
-			}*/
 
 			String response = this.getByBeneficiaryPhoneNo(mctsOutboundCall.getChildValidDataHandler().getPhone_No(),
 					servletRequest);
@@ -248,15 +234,15 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 					BenPhoneMapModel benPhoneMapModel;
 					while (innerIterator.hasNext()) {
 						benPhoneMapModel = innerIterator.next();
-						if(benPhoneMapModel.getBenRelationshipID()!=null) {
-						if (benPhoneMapModel.getBenRelationshipID() == 1) {
-							beneficiaryModel.getBenPhoneMaps().get(0).setBenRelationshipID(11);
-							if (beneficiary.getBeneficiaryRegID() != null) {
-								beneficiaryModel.getBenPhoneMaps().get(0)
-										.setParentBenRegID(beneficiary.getBeneficiaryRegID());
+						if (benPhoneMapModel.getBenRelationshipID() != null) {
+							if (benPhoneMapModel.getBenRelationshipID() == 1) {
+								beneficiaryModel.getBenPhoneMaps().get(0).setBenRelationshipID(11);
+								if (beneficiary.getBeneficiaryRegID() != null) {
+									beneficiaryModel.getBenPhoneMaps().get(0)
+											.setParentBenRegID(beneficiary.getBeneficiaryRegID());
+								}
 							}
 						}
-					  }
 					}
 				}
 			} else {
@@ -270,7 +256,8 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 
 			childValidDataRepository.addBeneficiaryRegID(model.getBeneficiaryRegID(),
 					mctsOutboundCall.getChildValidDataHandler().getMCTSID_no_Child_ID());
-			mctsOutboundCallRepository.addBeneficiaryRegIDChild(mctsOutboundCall.getChildValidDataHandler().getMCTSID_no_Child_ID(), model.getBeneficiaryRegID());
+			mctsOutboundCallRepository.addBeneficiaryRegIDChild(
+					mctsOutboundCall.getChildValidDataHandler().getMCTSID_no_Child_ID(), model.getBeneficiaryRegID());
 			mctsOutboundCall.getChildValidDataHandler().setBeneficiaryRegID(model.getBeneficiaryRegID());
 			mctsOutboundCall.getChildValidDataHandler().setBeneficiaryID(model.getBeneficiaryID());
 			mctsOutboundCall.setBeneficiaryRegID(model.getBeneficiaryRegID());
@@ -290,25 +277,11 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			beneficiaryModel.setBeneficiaryIdentities(blanklist);
 			beneficiaryModel.setProviderServiceMapID(mctsOutboundCall.getProviderServiceMapID());
 			beneficiaryModel.setVanID(mctsOutboundCall.getVanID());
-			
-			if(mctsOutboundCall.getMctsDataReaderDetail().getBirth_Date() != null)
-			{
-				Timestamp dob=new Timestamp(mctsOutboundCall.getMctsDataReaderDetail().getBirth_Date().getTime());
+
+			if (mctsOutboundCall.getMctsDataReaderDetail().getBirth_Date() != null) {
+				Timestamp dob = new Timestamp(mctsOutboundCall.getMctsDataReaderDetail().getBirth_Date().getTime());
 				beneficiaryModel.setDOB(dob);
 			}
-			
-			/*if(mctsOutboundCall.getMctsDataReaderDetail().getTaluka_Name()!=null)
-			{
-				Integer blockID= this.findBlockID(beneficiarySearchModal.getDistrictID(), mctsOutboundCall.getMctsDataReaderDetail().getTaluka_Name());
-				if(blockID>0) {
-				beneficiaryModel.getI_bendemographics().setBlockID(blockID);
-				}
-				if(mctsOutboundCall.getMctsDataReaderDetail().getVillage_Name()!=null && blockID>0)
-				{
-					Integer villageID = this.findVillageID(blockID, mctsOutboundCall.getMctsDataReaderDetail().getVillage_Name());
-					beneficiaryModel.getI_bendemographics().setDistrictBranchID(villageID);
-				}
-			}*/
 
 			String response = this.getByBeneficiaryPhoneNo(mctsOutboundCall.getMctsDataReaderDetail().getWhom_PhoneNo(),
 					servletRequest);
@@ -323,15 +296,15 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 					BenPhoneMapModel benPhoneMapModel;
 					while (innerIterator.hasNext()) {
 						benPhoneMapModel = innerIterator.next();
-						if(benPhoneMapModel.getBenRelationshipID()!=null) {
-						if (benPhoneMapModel.getBenRelationshipID() == 1) {
-							beneficiaryModel.getBenPhoneMaps().get(0).setBenRelationshipID(11);
-							if (beneficiary.getBeneficiaryRegID() != null) {
-								beneficiaryModel.getBenPhoneMaps().get(0)
-										.setParentBenRegID(beneficiary.getBeneficiaryRegID());
+						if (benPhoneMapModel.getBenRelationshipID() != null) {
+							if (benPhoneMapModel.getBenRelationshipID() == 1) {
+								beneficiaryModel.getBenPhoneMaps().get(0).setBenRelationshipID(11);
+								if (beneficiary.getBeneficiaryRegID() != null) {
+									beneficiaryModel.getBenPhoneMaps().get(0)
+											.setParentBenRegID(beneficiary.getBeneficiaryRegID());
+								}
 							}
 						}
-					  }
 					}
 				}
 			} else {
@@ -345,7 +318,8 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 
 			mctsDataHandlerRepository.addBeneficiaryRegID(model.getBeneficiaryRegID(),
 					mctsOutboundCall.getMctsDataReaderDetail().getMCTSID_no());
-			mctsOutboundCallRepository.addBeneficiaryRegIDMother(mctsOutboundCall.getMctsDataReaderDetail().getMCTSID_no(), model.getBeneficiaryRegID());
+			mctsOutboundCallRepository.addBeneficiaryRegIDMother(
+					mctsOutboundCall.getMctsDataReaderDetail().getMCTSID_no(), model.getBeneficiaryRegID());
 			mctsOutboundCall.getMctsDataReaderDetail().setBeneficiaryRegID(model.getBeneficiaryRegID());
 			mctsOutboundCall.getMctsDataReaderDetail().setBeneficiaryID(model.getBeneficiaryID());
 			mctsOutboundCall.setBeneficiaryRegID(model.getBeneficiaryRegID());
@@ -386,12 +360,12 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 		return httpRestModal.restURLConnect("{\"phoneNo\":" + request + "}", COMMON_URL + SEARCHUSERBYPHONENO_URL,
 				servletRequest.getHeader("Authorization"));
 	}
-	
+
 	@Override
 	public String updateBeneficiaries(String request, HttpServletRequest servletRequest) throws IEMRException {
 
 		MctsOutboundCall mctsOutboundCall = InputMapper.gson().fromJson(request, MctsOutboundCall.class);
-		
+
 		UpdateBeneficiaryModel beneficiaryModel = null;
 		String req = null;
 		String response = null;
@@ -400,63 +374,58 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 		blanklist.add(blankmodal);
 
 		if (mctsOutboundCall.getChildValidDataHandler() != null) {
-			
+
 			response = httpRestModal.restURLConnect(
 					"{\"beneficiaryRegID\":" + mctsOutboundCall.getChildValidDataHandler().getBeneficiaryRegID() + "}",
 					COMMON_URL + SEARCHUSERBYID_URL, servletRequest.getHeader("Authorization"));
-			
-			UpdateBeneficiaryModel[] beneficiaryModelArray = InputMapper.gson().fromJson(response, UpdateBeneficiaryModel[].class);
+
+			UpdateBeneficiaryModel[] beneficiaryModelArray = InputMapper.gson().fromJson(response,
+					UpdateBeneficiaryModel[].class);
 			System.out.println("error occured in IF");
-			if(beneficiaryModelArray.length > 0) 
+			if (beneficiaryModelArray.length > 0)
 				beneficiaryModel = beneficiaryModelArray[0];
 			else
 				throw new IEMRException("Beneficiary Not Found");
-			
+
 			System.out.println("error occured in IF after");
 
-			String name=mctsOutboundCall.getChildValidDataHandler().getChild_Name();
-			String[] nameArray= name.split(" ");
+			String name = mctsOutboundCall.getChildValidDataHandler().getChild_Name();
+			String[] nameArray = name.split(" ");
 			String firstName = nameArray[0];
-			String lastName=null;
-			if(nameArray.length==2)
-			{
+			String lastName = null;
+			if (nameArray.length == 2) {
 				lastName = nameArray[1];
-			}
-			else if(nameArray.length==3)
-			{
-				lastName = nameArray[1]+ " " +nameArray[2];
+			} else if (nameArray.length == 3) {
+				lastName = nameArray[1] + " " + nameArray[2];
 			}
 			beneficiaryModel.setBeneficiaryRegID(mctsOutboundCall.getBeneficiaryRegID());
 			beneficiaryModel.setFirstName(firstName);
 			beneficiaryModel.setLastName(lastName);
-			if(mctsOutboundCall.getChildValidDataHandler().getGender()!=null && mctsOutboundCall.getChildValidDataHandler().getGender().equalsIgnoreCase("Male"))
-			{
+			if (mctsOutboundCall.getChildValidDataHandler().getGender() != null
+					&& mctsOutboundCall.getChildValidDataHandler().getGender().equalsIgnoreCase("Male")) {
 				beneficiaryModel.setGenderID(1);
-			}
-			else if(mctsOutboundCall.getChildValidDataHandler().getGender()!=null && mctsOutboundCall.getChildValidDataHandler().getGender().equalsIgnoreCase("Female"))
-			{
+			} else if (mctsOutboundCall.getChildValidDataHandler().getGender() != null
+					&& mctsOutboundCall.getChildValidDataHandler().getGender().equalsIgnoreCase("Female")) {
 				beneficiaryModel.setGenderID(2);
-			}
-			else
-			{
+			} else {
 				beneficiaryModel.setGenderID(3);
 			}
-			
+
 			beneficiaryModel.setFatherName(mctsOutboundCall.getChildValidDataHandler().getFather_Name());
 			beneficiaryModel.setMotherName(mctsOutboundCall.getChildValidDataHandler().getMother_Name());
-			beneficiaryModel.setDOB(mctsOutboundCall.getChildValidDataHandler().setDobForIdentity(mctsOutboundCall.getChildValidDataHandler()));
-			
-			
+			beneficiaryModel.setDOB(mctsOutboundCall.getChildValidDataHandler()
+					.setDobForIdentity(mctsOutboundCall.getChildValidDataHandler()));
+
 			beneficiaryModel.getI_bendemographics().setCreatedDate(beneficiaryModelArray[0].getCreatedDate());
 			beneficiaryModel.getI_bendemographics().setCreatedBy(beneficiaryModelArray[0].getCreatedBy());
 			beneficiaryModel.setRemarks(mctsOutboundCall.getChildValidDataHandler().getRemarks());
 			beneficiaryModel.setCreatedBy(beneficiaryModelArray[0].getCreatedBy());
 			beneficiaryModel.setCreatedDate(beneficiaryModelArray[0].getCreatedDate());
 			beneficiaryModel.setBeneficiaryIdentities(blanklist);
-			
+
 			List<BenPhoneMapModel> benPhoneMapList = new ArrayList<BenPhoneMapModel>();
-			
-			BenPhoneMapModel phoneMap=new BenPhoneMapModel();
+
+			BenPhoneMapModel phoneMap = new BenPhoneMapModel();
 			phoneMap.setPhoneNo(mctsOutboundCall.getChildValidDataHandler().getPhone_No());
 			phoneMap.setPhoneTypeName(mctsOutboundCall.getChildValidDataHandler().getPhone_No_of());
 			phoneMap.setParentBenRegID(beneficiaryModelArray[0].getBenPhoneMaps().get(0).getParentBenRegID());
@@ -464,7 +433,7 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			benPhoneMapList.add(phoneMap);
 			beneficiaryModel.setBenPhoneMaps(benPhoneMapList);
 			beneficiaryModel.setVanID(mctsOutboundCall.getVanID());
-			
+
 			beneficiaryModel.setChangeInSelfDetails(true);
 			beneficiaryModel.setChangeInContacts(true);
 			beneficiaryModel.setChangeInAddress(false);
@@ -473,30 +442,28 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			req = httpRestModal.restURLConnect(req, COMMON_URL + UPDATE_URL, servletRequest.getHeader("Authorization"));
 
 		} else {
-			
+
 			response = httpRestModal.restURLConnect(
 					"{\"beneficiaryRegID\":" + mctsOutboundCall.getMctsDataReaderDetail().getBeneficiaryRegID() + "}",
 					COMMON_URL + SEARCHUSERBYID_URL, servletRequest.getHeader("Authorization"));
-			UpdateBeneficiaryModel[] beneficiaryModelArray = InputMapper.gson().fromJson(response, UpdateBeneficiaryModel[].class);
+			UpdateBeneficiaryModel[] beneficiaryModelArray = InputMapper.gson().fromJson(response,
+					UpdateBeneficiaryModel[].class);
 			System.out.println("error occured in else");
-			if(beneficiaryModelArray.length > 0) 
+			if (beneficiaryModelArray.length > 0)
 				beneficiaryModel = beneficiaryModelArray[0];
 			else
 				throw new IEMRException("Beneficiary Not Found");
-			
+
 			System.out.println("error occured in else after");
 
-			String name=mctsOutboundCall.getMctsDataReaderDetail().getName();
-			String[] nameArray= name.split(" ");
+			String name = mctsOutboundCall.getMctsDataReaderDetail().getName();
+			String[] nameArray = name.split(" ");
 			String firstName = nameArray[0];
-			String lastName=null;
-			if(nameArray.length==2)
-			{
+			String lastName = null;
+			if (nameArray.length == 2) {
 				lastName = nameArray[1];
-			}
-			else if(nameArray.length==3)
-			{
-				lastName = nameArray[1]+ " " +nameArray[2];
+			} else if (nameArray.length == 3) {
+				lastName = nameArray[1] + " " + nameArray[2];
 			}
 			beneficiaryModel.setBeneficiaryRegID(mctsOutboundCall.getBeneficiaryRegID());
 			beneficiaryModel.setFirstName(firstName);
@@ -505,17 +472,17 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			beneficiaryModel.setGenderName("Female");
 			beneficiaryModel.setSpouseName(mctsOutboundCall.getMctsDataReaderDetail().getHusband_Name());
 			beneficiaryModel.setAge(mctsOutboundCall.getMctsDataReaderDetail().getAge());
-			
+
 			beneficiaryModel.getI_bendemographics().setCreatedDate(beneficiaryModelArray[0].getCreatedDate());
 			beneficiaryModel.getI_bendemographics().setCreatedBy(beneficiaryModelArray[0].getCreatedBy());
 			beneficiaryModel.setRemarks(mctsOutboundCall.getMctsDataReaderDetail().getRemarks());
 			beneficiaryModel.setCreatedBy(beneficiaryModelArray[0].getCreatedBy());
 			beneficiaryModel.setCreatedDate(beneficiaryModelArray[0].getCreatedDate());
 			beneficiaryModel.setBeneficiaryIdentities(blanklist);
-			
+
 			List<BenPhoneMapModel> benPhoneMapList = new ArrayList<BenPhoneMapModel>();
-			
-			BenPhoneMapModel phoneMap=new BenPhoneMapModel();
+
+			BenPhoneMapModel phoneMap = new BenPhoneMapModel();
 			phoneMap.setPhoneNo(mctsOutboundCall.getMctsDataReaderDetail().getWhom_PhoneNo());
 			phoneMap.setPhoneTypeName(mctsOutboundCall.getMctsDataReaderDetail().getPhoneNo_Of_Whom());
 			phoneMap.setParentBenRegID(beneficiaryModelArray[0].getBenPhoneMaps().get(0).getParentBenRegID());
@@ -525,7 +492,7 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 			benPhoneMapList.add(phoneMap);
 			beneficiaryModel.setBenPhoneMaps(benPhoneMapList);
 			beneficiaryModel.setVanID(mctsOutboundCall.getVanID());
-			
+
 			beneficiaryModel.setChangeInSelfDetails(true);
 			beneficiaryModel.setChangeInContacts(true);
 			beneficiaryModel.setChangeInAddress(false);
@@ -537,23 +504,19 @@ public class MctsIdentityServiceImpl implements MctsIdentityService {
 
 		return mctsOutboundCall.toString();
 	}
-	
-	private Integer findBlockID(Integer districtID, String blockName)
-	{
+
+	private Integer findBlockID(Integer districtID, String blockName) {
 		Integer blockID = fileManagerRepository.getBlockID(districtID, blockName);
-		if(blockID!=null) {
-		return blockID;
-		}
-		else
-		{
+		if (blockID != null) {
+			return blockID;
+		} else {
 			return 0;
 		}
 	}
-	
-	private Integer findVillageID(Integer blockID, String villageName)
-	{
-		Integer villageID= fileManagerRepository.getVillageID(blockID, villageName);
+
+	private Integer findVillageID(Integer blockID, String villageName) {
+		Integer villageID = fileManagerRepository.getVillageID(blockID, villageName);
 		return villageID;
 	}
-	
+
 }

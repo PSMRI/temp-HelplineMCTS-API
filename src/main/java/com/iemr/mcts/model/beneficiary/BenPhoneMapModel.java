@@ -40,9 +40,7 @@ import lombok.Data;
 public @Data class BenPhoneMapModel {
 	private Long benPhMapID;
 	private Long benificiaryRegID;
-	// private BeneficiaryModel beneficiaryModel;
 	private Long parentBenRegID;
-	// private BeneficiaryModel parentBeneficiary;
 	private Integer benRelationshipID;
 	private BenRelationshipTypeModel benRelationshipType;
 	private String phoneNo;
@@ -54,7 +52,6 @@ public @Data class BenPhoneMapModel {
 	private Timestamp createdDate;
 	private String modifiedBy;
 	private Timestamp lastModDate;
-	// private Integer nuisanceCallCount = 0;
 
 	private static MctsIdentityService mctsIdentityService;
 
@@ -100,13 +97,14 @@ public @Data class BenPhoneMapModel {
 		return models;
 	}
 
-	public static List<BenPhoneMapModel> getBenPhoneMapModelList(String phoneNoOfWhom, String whomPhoneNo, String CreatedBy) {
+	public static List<BenPhoneMapModel> getBenPhoneMapModelList(String phoneNoOfWhom, String whomPhoneNo,
+			String CreatedBy) {
 		List<BenPhoneMapModel> list = new ArrayList<BenPhoneMapModel>();
 		BenPhoneMapModel model = new BenPhoneMapModel();
 		if (phoneNoOfWhom.equalsIgnoreCase("self")) {
 
 			model.benRelationshipID = 1;
-		} 
+		}
 		model.phoneTypeName = phoneNoOfWhom;
 		model.phoneNo = whomPhoneNo;
 		model.createdBy = CreatedBy;

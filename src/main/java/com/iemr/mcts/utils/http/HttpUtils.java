@@ -46,11 +46,8 @@ public class HttpUtils {
 	public static final String AUTHORIZATION = "Authorization";
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
 	private String server;
-	// @Autowired
 	private RestTemplate rest;
-	// @Autowired
 	private HttpHeaders headers;
-	// @Autowired
 	private HttpStatus status;
 
 	public HttpUtils() {

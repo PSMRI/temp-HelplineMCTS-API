@@ -49,13 +49,12 @@ public interface QuestionnaireRepository extends CrudRepository<QuestionnaireDet
 	@Query("update QuestionnaireDetail q set q.question = :question, q.triggerFeedback = :triggerFeedback, "
 			+ "q.triggerFeedbackFor = :triggerFeedbackFor, q.showText = :showText, q.showTextFor = :showTextFor, "
 			+ "q.questionRank = :questionRank, q.isMandatory = :isMandatory, q.interaction = :interaction "
-			+ "where :question is not null and :answerType is not null and "
-			+ "q.questionID = :questionID")
+			+ "where :question is not null and :answerType is not null and " + "q.questionID = :questionID")
 	public int updateQuestionnaire(@Param("questionID") Integer questionID, @Param("question") String question,
 			@Param("answerType") String answerType, @Param("triggerFeedback") Boolean triggerFeedback,
 			@Param("triggerFeedbackFor") String triggerFeedbackFor, @Param("showText") Boolean showText,
 			@Param("showTextFor") String showTextFor, @Param("questionRank") Integer questionRank,
-			@Param("isMandatory") Boolean isMandatory,@Param("interaction") String interaction);
+			@Param("isMandatory") Boolean isMandatory, @Param("interaction") String interaction);
 
 	@Transactional
 	@Modifying(clearAutomatically = true)
@@ -65,7 +64,4 @@ public interface QuestionnaireRepository extends CrudRepository<QuestionnaireDet
 			@Param("parentAnswer") String parentAnswer, @Param("questionID") Integer questionID,
 			@Param("providerServiceMapID") Long providerServiceMapID);
 
-//	@Query("select qn from QuestionnaireDetail qn where qn.questionRank = : questionRank and qn.")
-//	public QuestionnaireDetail checkRank(@Param("questionRank") Integer questionRank,
-//			@Param("outboundCallType") Integer outboundCallType,@Param("providerServiceMapID") Integer providerServiceMapID);
 }

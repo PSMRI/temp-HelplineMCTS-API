@@ -22,7 +22,6 @@
 package com.iemr.mcts.services.report;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
-import com.iemr.mcts.data.domain.BenDetailDTO;
 import com.iemr.mcts.data.report.BenCallDetail;
 import com.iemr.mcts.data.report.CallAnsweredDetail;
 import com.iemr.mcts.data.report.CallResponseReportDetail;

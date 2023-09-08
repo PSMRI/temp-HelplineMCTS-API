@@ -88,7 +88,6 @@ public class MCTSDateUtilsImpl implements MCTSDateUtils {
 				mctsOutboundCall.setDisplayOBCallType(callConfigurationDetail.getDisplayOBCallType());
 				callsDatesMap.put(callConfigurationDetail.getOutboundCallType(), mctsOutboundCall);
 			}
-			// }
 		}
 
 		return callsDatesMap;

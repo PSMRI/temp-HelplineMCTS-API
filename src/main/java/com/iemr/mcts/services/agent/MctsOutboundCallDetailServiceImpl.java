@@ -133,18 +133,18 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 	 * mcts call response repository
 	 */
 	private MctsCallResponseRepository mctsCallResponseRepository;
-	
+
 	/**
-	 * Outbond call service 
+	 * Outbond call service
 	 */
 	private MctsOutbondCallService mctsOutbondCallService;
-	
+
 	/**
 	 * Inject outbond call service
 	 */
 	@Autowired
-	public void setMctsOutbondCallService(MctsOutbondCallService mctsOutbondCallService){
-		
+	public void setMctsOutbondCallService(MctsOutbondCallService mctsOutbondCallService) {
+
 		this.mctsOutbondCallService = mctsOutbondCallService;
 	}
 
@@ -354,14 +354,12 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 			// to update the status of current call
 			mctsOutboundCallRepository.updateCallClosureDetails(mctsOutboundCall.getObCallID(),
 					mctsOutboundCall.getNoOfTrials(), mctsOutboundCall.getCallStatus());
-			
+
 			// updating status wheather call is verified or not
 			mctsOutboundCallDetailRepository.updateIsVerified(callClosureDetail.getIsVerified(),
 					callClosureDetail.getCallDetailID());
 
 		} else { // if call not answered
-
-			// detail.setCallStatus("Not Answered");
 
 			// code for allocating call to next time with the configured date
 			List<CallConfigurationDetail> callConfigurationDetails = callConfigurationRepository
@@ -373,7 +371,6 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 				mctsOutboundCall.setCallStatus("Completed");
 			} else {
 
-				// mctsOutboundCall.setCallStatus("In Progress");
 				mctsOutboundCallRepository.updatePrefferedCallDate(mctsOutboundCall.getObCallID(), Date.valueOf(
 						LocalDate.now().plusDays(Integer.parseInt(callConfigurationDetail.getNextAttemptPeriod()))));
 				callClosureDetail.setRemarks("Call has been queued for next time. " + callClosureDetail.getRemarks());
@@ -383,29 +380,15 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 					mctsOutboundCall.getNoOfTrials() + 1, mctsOutboundCall.getCallStatus());
 		}
 
-		// M_User user = new M_User();
-		// user.setUserID(mctsOutboundCall.getAllocatedUserID());
-
-		// detail.setRemark(callClosureDetail.getRemarks());
-		// detail.setCreatedBy(callClosureDetail.getCreatedBy());
-		// detail.setMctsOutboundCall(mctsOutboundCall);
-		// if (changeLog != null)
-		// detail.setChangeLog(changeLog);
-		// detail.setObCallID(mctsOutboundCall.getObCallID());
-		// detail.setUser(user);
-		// detail.setProviderServiceMapID(mctsOutboundCall.getProviderServiceMapID());
-		// detail.setOutboundCallType(mctsOutboundCall.getOutboundCallType());
-		// MctsOutboundCallDetail callDetail =
-		// mctsOutboundCallDetailRepository.save(detail);
-
 		Timestamp callEndTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
-		Timestamp callStartTime = mctsOutboundCallDetailRepository.getCallStartTime(callClosureDetail.getCallDetailID());
-		
+		Timestamp callStartTime = mctsOutboundCallDetailRepository
+				.getCallStartTime(callClosureDetail.getCallDetailID());
+
 		String callDuration = this.calculateCallDuration(callStartTime, callEndTime);
-		
+
 		mctsOutboundCallDetailRepository.updateCallHistory(callClosureDetail.getCallTypeID(),
 				Timestamp.valueOf(LocalDateTime.now()), callClosureDetail.getRemarks(),
-				callClosureDetail.getCallDetailID(), mctsOutboundCall.getBeneficiaryRegID(), callEndTime,callDuration);
+				callClosureDetail.getCallDetailID(), mctsOutboundCall.getBeneficiaryRegID(), callEndTime, callDuration);
 
 		if (changeLog != null) {
 
@@ -524,16 +507,16 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 
 		MctsOutboundCallDetail mctsOutboundCallDetail = InputMapper.gson().fromJson(request,
 				MctsOutboundCallDetail.class);
-		
-		mctsOutboundCallDetail.setCallTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-		
-		//Setting default call type Id
-		if(mctsOutboundCallDetail.getCallTypeID() == null) {
-			mctsOutboundCallDetail.setCallTypeID(mctsOutboundCallDetailRepository.getCallTypeId());		
-			}
 
-		MctsOutboundCallDetail call = mctsOutboundCallDetailRepository
-				.isAvailable(mctsOutboundCallDetail.getCallId(), mctsOutboundCallDetail.getAllocatedUserID());
+		mctsOutboundCallDetail.setCallTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+
+		// Setting default call type Id
+		if (mctsOutboundCallDetail.getCallTypeID() == null) {
+			mctsOutboundCallDetail.setCallTypeID(mctsOutboundCallDetailRepository.getCallTypeId());
+		}
+
+		MctsOutboundCallDetail call = mctsOutboundCallDetailRepository.isAvailable(mctsOutboundCallDetail.getCallId(),
+				mctsOutboundCallDetail.getAllocatedUserID());
 		if (call == null) {
 			call = mctsOutboundCallDetailRepository.save(mctsOutboundCallDetail);
 		}
@@ -613,7 +596,7 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 	}
 
 	@Override
-	public String caseSheet(String request,  HttpServletRequest servletRequest) throws IEMRException {
+	public String caseSheet(String request, HttpServletRequest servletRequest) throws IEMRException {
 
 		Map<String, Object> results = new HashMap<String, Object>();
 		MctsOutboundCallDetail mctsOutboundCallDetail = InputMapper.gson().fromJson(request,
@@ -623,33 +606,33 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 				.findByCallDetailID(mctsOutboundCallDetail.getCallDetailID());
 		MctsOutboundCall mctsOutboundCall = mctsOutboundCallRepository
 				.findOnClientID(mctsOutboundCallDetail.getCallId());
-		
-		String updObj = mctsOutbondCallService.getUpdatedObject(OutputMapper.gson().toJson(mctsOutboundCall), servletRequest);
-		mctsOutboundCall = InputMapper.gson().fromJson(updObj,
-				MctsOutboundCall.class);
+
+		String updObj = mctsOutbondCallService.getUpdatedObject(OutputMapper.gson().toJson(mctsOutboundCall),
+				servletRequest);
+		mctsOutboundCall = InputMapper.gson().fromJson(updObj, MctsOutboundCall.class);
 		ArrayList<MctsCallResponseDetail> callResponseDetails = mctsCallResponseRepository
 				.getMctsCallResponse(mctsOutboundCallDetail.getCallDetailID());
 		results.put("mctsOutboundCallDetail", mctsOutboundCallDetail);
 		results.put("mctsOutboundCall", mctsOutboundCall);
 		results.put("callResponseDetails", callResponseDetails);
-		if(mctsOutboundCall.getOutboundCallType().indexOf("PNC") != -1) {
-			
-			if(mctsOutboundCall.getChildID() != null) {
-				
-				childCongenitalAnomaliesDetails = childCongenitalAnomaliesRepository.
-						findByChildID(mctsOutboundCall.getChildID());
-			}else {
-				
-				childCongenitalAnomaliesDetails = childCongenitalAnomaliesRepository.
-						findByMotherID(mctsOutboundCall.getMotherID());
+		if (mctsOutboundCall.getOutboundCallType().indexOf("PNC") != -1) {
+
+			if (mctsOutboundCall.getChildID() != null) {
+
+				childCongenitalAnomaliesDetails = childCongenitalAnomaliesRepository
+						.findByChildID(mctsOutboundCall.getChildID());
+			} else {
+
+				childCongenitalAnomaliesDetails = childCongenitalAnomaliesRepository
+						.findByMotherID(mctsOutboundCall.getMotherID());
 			}
-			
+
 			results.put("childCongenitalAnomaliesDetails", childCongenitalAnomaliesDetails);
 		}
-		
+
 		return OutputMapper.gson().toJson(results);
 	}
-	
+
 	@Override
 	public String getChangeLogs(String request) throws IEMRException {
 
@@ -667,32 +650,33 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 		return mctsOutboundCallDetails.toString();
 	}
 
-	private String calculateCallDuration(Timestamp CallStartTime,Timestamp CallEndTime)
-	{
-		
-	    long diff = CallEndTime.getTime() - CallStartTime.getTime();
-	    long durationInSeconds = diff / 1000;
-	   
-	    
-        long SECONDS_IN_A_MINUTE = 60;
-        long MINUTES_IN_AN_HOUR = 60;
-        long HOURS_IN_A_DAY = 24;
+	private String calculateCallDuration(Timestamp CallStartTime, Timestamp CallEndTime) {
 
-        long sec = (durationInSeconds >= SECONDS_IN_A_MINUTE) ? durationInSeconds % SECONDS_IN_A_MINUTE : durationInSeconds;
-        long min = (durationInSeconds /= SECONDS_IN_A_MINUTE) >= MINUTES_IN_AN_HOUR ? durationInSeconds%MINUTES_IN_AN_HOUR : durationInSeconds;
-        long hrs = (durationInSeconds /= MINUTES_IN_AN_HOUR) >= HOURS_IN_A_DAY ? durationInSeconds % HOURS_IN_A_DAY : durationInSeconds;
-        
-        StringBuffer sb = new StringBuffer();
-        String EMPTY_STRING = "";
-        sb.append(hrs > 0 ? hrs + (hrs > 1 ? " hours " : " hour "): EMPTY_STRING);
-        sb.append(min > 0 ? min + (min > 1 ? " mins " : " min "): EMPTY_STRING);
-        sb.append(sec > 0 ? sec + (sec > 1 ? " secs " : " sec "): EMPTY_STRING);
-  
-        String callDuration = sb.toString();
-		
+		long diff = CallEndTime.getTime() - CallStartTime.getTime();
+		long durationInSeconds = diff / 1000;
+
+		long SECONDS_IN_A_MINUTE = 60;
+		long MINUTES_IN_AN_HOUR = 60;
+		long HOURS_IN_A_DAY = 24;
+
+		long sec = (durationInSeconds >= SECONDS_IN_A_MINUTE) ? durationInSeconds % SECONDS_IN_A_MINUTE
+				: durationInSeconds;
+		long min = (durationInSeconds /= SECONDS_IN_A_MINUTE) >= MINUTES_IN_AN_HOUR
+				? durationInSeconds % MINUTES_IN_AN_HOUR
+				: durationInSeconds;
+		long hrs = (durationInSeconds /= MINUTES_IN_AN_HOUR) >= HOURS_IN_A_DAY ? durationInSeconds % HOURS_IN_A_DAY
+				: durationInSeconds;
+
+		StringBuffer sb = new StringBuffer();
+		String EMPTY_STRING = "";
+		sb.append(hrs > 0 ? hrs + (hrs > 1 ? " hours " : " hour ") : EMPTY_STRING);
+		sb.append(min > 0 ? min + (min > 1 ? " mins " : " min ") : EMPTY_STRING);
+		sb.append(sec > 0 ? sec + (sec > 1 ? " secs " : " sec ") : EMPTY_STRING);
+
+		String callDuration = sb.toString();
+
 		return callDuration;
-		
-	}
 
+	}
 
 }

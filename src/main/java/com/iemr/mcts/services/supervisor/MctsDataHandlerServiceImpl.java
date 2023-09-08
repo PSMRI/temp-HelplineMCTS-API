@@ -305,75 +305,69 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.iemr.mcts.services.supervisor.MctsDataHadlerService#mctsDataUpload(
+	 * @see com.iemr.mcts.services.supervisor.MctsDataHadlerService#mctsDataUpload(
 	 * org.springframework.web.multipart.MultipartFile)
 	 */
-	
+
 	@Override
 	public UploadData validateData(UploadData uploaddata) {
-		String message="";
-		Iterator<Row> rowIterator =uploaddata.getRowIterator();
+		String message = "";
+		Iterator<Row> rowIterator = uploaddata.getRowIterator();
 		Iterable<Row> iterable = () -> rowIterator;
-		FormulaEvaluator evaluator =uploaddata.getEvaluator();
-		Map<String, String> fieldsMap=uploaddata.getFieldsMap();
-				
-		FileManager fileManager=uploaddata.getFileManager();
+		FormulaEvaluator evaluator = uploaddata.getEvaluator();
+		Map<String, String> fieldsMap = uploaddata.getFieldsMap();
+
+		FileManager fileManager = uploaddata.getFileManager();
 		if (uploaddata.getIsmotherdata() != null && uploaddata.getIsmotherdata()) {
 			uploaddata.setIsmotherdata(true);
-			// MctsDataReaderDetail dataReaderDetail = null;
 			List<MctsDataReaderDetail> mothervalid = new ArrayList<>();
 
 			List<MctsInvalidDataReaderDetail> motherinvalid = new ArrayList<>();
 			final Long fileid = fileManager.getFileID();
 			final String createdby = fileManager.getCreatedBy();
-			ConcurrentHashMap<Long, String> map = new ConcurrentHashMap(); 
+			ConcurrentHashMap<Long, String> map = new ConcurrentHashMap();
 			StreamSupport.stream(iterable.spliterator(), false).forEach(action -> {
 				Row row = action;
 				if (row.getRowNum() != 0 && row.getCell(0) != null) {
 
 					JSONObject objectMap = fileProcessor.getDataObjectMap(row, fieldsMap, evaluator);
 					try {
-						MctsDataReaderDetail dataReaderDetail = inputMapper.gson()
-								.fromJson(objectMap.toString(), MctsDataReaderDetail.class);
+						MctsDataReaderDetail dataReaderDetail = inputMapper.gson().fromJson(objectMap.toString(),
+								MctsDataReaderDetail.class);
 
 						dataReaderDetail.setIsAllocated(false);
-						dataReaderDetail.setFileID(fileid); // (fileManager);
-						// dataReaderDetail.setFileManager(fileManager);
+						dataReaderDetail.setFileID(fileid);
 						dataReaderDetail.setCreatedBy(createdby);
-						if (this.savaMotherMctsData(dataReaderDetail,map)) {
+						if (this.savaMotherMctsData(dataReaderDetail, map)) {
 							mothervalid.add(dataReaderDetail);
 							map.put(dataReaderDetail.getMCTSID_no(), "1");
 						} else {
-							MctsInvalidDataReaderDetail invalidDataReaderDetail = inputMapper.gson()
-									.fromJson(outputMapper.gson().toJson(dataReaderDetail),
-											MctsInvalidDataReaderDetail.class);
+							MctsInvalidDataReaderDetail invalidDataReaderDetail = inputMapper.gson().fromJson(
+									outputMapper.gson().toJson(dataReaderDetail), MctsInvalidDataReaderDetail.class);
 							motherinvalid.add(invalidDataReaderDetail);
 
 						}
 					} catch (Exception e) {
 
-						throw new ExcelColumnDataException(
-								"Data error in the line " + (row.getRowNum() + 1));
+						throw new ExcelColumnDataException("Data error in the line " + (row.getRowNum() + 1));
 					}
 				}
 			});
 			uploaddata.setMotherinvalid(motherinvalid);
 			uploaddata.setMothervalid(mothervalid);
 			fileManager.setValidRecordCount(Long.valueOf(mothervalid.size()));
-			fileManager.setErroredRecordCount(Long.valueOf(motherinvalid.size())); 
-			message = mothervalid.size() + " valid and " + motherinvalid.size()
-					+ " invalid records.";
+			fileManager.setErroredRecordCount(Long.valueOf(motherinvalid.size()));
+			message = mothervalid.size() + " valid and " + motherinvalid.size() + " invalid records.";
 		}
 
-		if (uploaddata.getIschilddata() != null && uploaddata.getIschilddata()) { 
+		if (uploaddata.getIschilddata() != null && uploaddata.getIschilddata()) {
 			uploaddata.setIschilddata(true);
 			List<ChildValidDataHandler> childvalid = new ArrayList<>();
 
 			List<ChildInvalidDataHandler> childinvalid = new ArrayList<>();
 
 			ChildValidDataHandler childValidDataHandler = null;
-			ConcurrentHashMap<Long, String> mapc = new ConcurrentHashMap(); 
+			ConcurrentHashMap<Long, String> mapc = new ConcurrentHashMap();
 			while (rowIterator.hasNext()) {
 
 				Row row = rowIterator.next();
@@ -384,32 +378,26 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 						childValidDataHandler = inputMapper.gson().fromJson(objectMap.toString(),
 								ChildValidDataHandler.class);
-				
 
-					childValidDataHandler.setIsAllocated(false);
-					childValidDataHandler.setCreatedBy(fileManager.getCreatedBy());
-					childValidDataHandler.setFileID(fileManager.getFileID());
-					if (this.savaChildMctsData(childValidDataHandler,mapc)) {
-						childvalid.add(childValidDataHandler);
-						mapc.put(childValidDataHandler.getMCTSID_no_Child_ID(), "1");
-					} else {
-						ChildInvalidDataHandler invalidChildDetail = inputMapper.gson().fromJson(
-								outputMapper.gson().toJson(childValidDataHandler),
-								ChildInvalidDataHandler.class);
-						childinvalid.add(invalidChildDetail);
-					}
+						childValidDataHandler.setIsAllocated(false);
+						childValidDataHandler.setCreatedBy(fileManager.getCreatedBy());
+						childValidDataHandler.setFileID(fileManager.getFileID());
+						if (this.savaChildMctsData(childValidDataHandler, mapc)) {
+							childvalid.add(childValidDataHandler);
+							mapc.put(childValidDataHandler.getMCTSID_no_Child_ID(), "1");
+						} else {
+							ChildInvalidDataHandler invalidChildDetail = inputMapper.gson().fromJson(
+									outputMapper.gson().toJson(childValidDataHandler), ChildInvalidDataHandler.class);
+							childinvalid.add(invalidChildDetail);
+						}
 
-					
 					} catch (Exception e) {
 
-						if (e.getMessage()
-								.substring(e.getMessage().lastIndexOf("Exception:") + 10) != null) {
-							throw new ExcelColumnDataException(
-									"Data error in the line " + (row.getRowNum() + 1) + e.getMessage()
-											.substring(e.getMessage().lastIndexOf("Exception:") + 10));
+						if (e.getMessage().substring(e.getMessage().lastIndexOf("Exception:") + 10) != null) {
+							throw new ExcelColumnDataException("Data error in the line " + (row.getRowNum() + 1)
+									+ e.getMessage().substring(e.getMessage().lastIndexOf("Exception:") + 10));
 						} else {
-							throw new ExcelColumnDataException(
-									"Data error in the line " + (row.getRowNum() + 1));
+							throw new ExcelColumnDataException("Data error in the line " + (row.getRowNum() + 1));
 						}
 					}
 				}
@@ -419,24 +407,22 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 			uploaddata.setChildinvalid(childinvalid);
 			uploaddata.setChildvalid(childvalid);
 			fileManager.setValidRecordCount(Long.valueOf(childvalid.size()));
-			fileManager.setErroredRecordCount(Long.valueOf(childinvalid.size())); 
-			message = childvalid.size() + " valid and " + childinvalid.size()
-					+ " invalid records. ";
+			fileManager.setErroredRecordCount(Long.valueOf(childinvalid.size()));
+			message = childvalid.size() + " valid and " + childinvalid.size() + " invalid records. ";
 		}
-		
+
 		fileManager.setFileStatusID(2L);
 		fileManager.setStatusReason(message);
 		fileManagerRepository.save(fileManager);
 		return uploaddata;
 	}
+
 	@Override
 	public String savemother(UploadData uploadData) {
 		try {
 			FileManager entities = uploadData.getFileManager();
 			entities.setModifiedBy(entities.getCreatedBy());
 			logger.info("ismother " + uploadData.getIsmotherdata() + " ischild" + uploadData.getIschilddata() + " ");
-			/*logger.info("ismother " + uploadData.getMotherinvalid().size() + " ischild"
-					+ uploadData.getMothervalid().size());*/
 
 			if (uploadData.getIschilddata() != null && uploadData.getIschilddata()) {
 				uploadData.getChildvalid().parallelStream().forEach(action -> {
@@ -468,9 +454,6 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 				entities.setErroredRecordCount((long) uploadData.getMotherinvalid().size());
 			}
 			if (uploadData.getFileManager() != null) {
-				// fileManagerRepository.updateStatus(uploadData.getFileManager().getFileID(),
-				// 2L,
-				// uploadData.getFileManager().getCreatedBy());
 				entities.setFileStatusID(3L);
 				fileManagerRepository.save(entities);
 			}
@@ -546,41 +529,31 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 						List<String> headers = fileProcessor.getHeadersAsList(datatypeSheet.getRow(0));
 						Set<String> keySet = new HashSet<String>(fieldsMap.keySet());
-						
-						// 23-07-2020 implementing new logic for more Excel fields.
-//						if (!(keySet.containsAll(headers) || headers.containsAll(keySet))) {
-//
-//							message = "Data file mismatch with the type (Mother/Child) or belongs to a different state";
-//							uploaddata.setMessage(message);
-//							return uploaddata;
-//						}
-						
-						// New logic implemented for accepting more columns
-						if(keySet.size() <= 0  && headers.size() <= 0) {
+
+						if (keySet.size() <= 0 && headers.size() <= 0) {
 							message = "Data File Is Empty Please Fill The Mandatory Fields Or User Is not Mapped With State";
 							uploaddata.setMessage(message);
 							return uploaddata;
 						}
 						FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 						Iterator<Row> rowIterator = datatypeSheet.iterator();
-						
+
 						uploaddata.setRowIterator(rowIterator);
 						uploaddata.setFieldsMap(fieldsMap);
 						uploaddata.setEvaluator(evaluator);
-						
+
 						fileManager.setFileStatusID(1L);
-						
+
 						if (statewiseFieldsDetail.getFieldFor().equals(MctsConstants.MOTHER_RECORDS)) {
 							uploaddata.setIsmotherdata(true);
 							fileManager.setIsMother(true);
-							
+
 						}
 
 						if (statewiseFieldsDetail.getFieldFor().equals(MctsConstants.CHILD_RECORDS)) {
 							uploaddata.setIschilddata(true);
 							fileManager.setIsMother(false);
 
-//							message = " FileID " + fileManager.getFileID();
 						}
 						fileManager = fileManagerRepository.save(fileManager);
 						uploaddata.setFileManager(fileManager);
@@ -620,7 +593,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 		return uploaddata;
 	}
 
-	private Boolean savaMotherMctsData(MctsDataReaderDetail dataReaderDetail,ConcurrentHashMap<Long, String> map) {
+	private Boolean savaMotherMctsData(MctsDataReaderDetail dataReaderDetail, ConcurrentHashMap<Long, String> map) {
 
 		try {
 
@@ -660,8 +633,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 				dataReaderDetail.setIs_Valid(false);
 				dataReaderDetail.setInValid_Reason("Duplicate Entry");
 			}
-			if (dataReaderDetail.getMCTSID_no() != null
-					&& map.containsKey(dataReaderDetail.getMCTSID_no())) {
+			if (dataReaderDetail.getMCTSID_no() != null && map.containsKey(dataReaderDetail.getMCTSID_no())) {
 
 				dataReaderDetail.setIs_Valid(false);
 				dataReaderDetail.setInValid_Reason("Duplicate Entry");
@@ -692,9 +664,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 						dataReaderDetail.setHigh_Risk_Reason("Mother age is below 18 or above 35");
 					}
 					dataReaderDetail.setAge(age);
-				}
-				else if(dataReaderDetail.getBirth_Date() ==null && dataReaderDetail.getAge() != null)
-				{
+				} else if (dataReaderDetail.getBirth_Date() == null && dataReaderDetail.getAge() != null) {
 					Date birthDate = this.calculateBirthDate(dataReaderDetail.getAge());
 					dataReaderDetail.setBirth_Date(birthDate);
 					if (dataReaderDetail.getAge() < 18 || dataReaderDetail.getAge() > 35) {
@@ -756,21 +726,12 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 					dataReaderDetail.setPhoneNo_Of_Whom("NA");
 				}
 				logger.info("savaMotherMctsData " + outputMapper.gson().toJson(dataReaderDetail) + " to valid record.");
-				// MctsDataReaderDetail detail =
-				// mctsDataHandlerRepository.save(dataReaderDetail);
-				// this.setMotherOutboundcalls(detail,
-				// dataReaderDetail.getFileManager());
 				return true;
 			}
 
 			else {
 				logger.info(
 						"savaMotherMctsData " + outputMapper.gson().toJson(dataReaderDetail) + " to invalid record.");
-				// MctsInvalidDataReaderDetail invalidDataReaderDetail =
-				// inputMapper.gson()
-				// .fromJson(outputMapper.gson().toJson(dataReaderDetail),
-				// MctsInvalidDataReaderDetail.class);
-				// mctsInvalidDataRepository.save(invalidDataReaderDetail);
 				return false;
 			}
 
@@ -783,7 +744,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 	/**
 	 * 
-	 * @param mapc 
+	 * @param mapc
 	 * @param
 	 * @param manager
 	 * @return
@@ -820,20 +781,16 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 				childDataHandler.setIs_Valid(false);
 				childDataHandler.setError_Reason("Data already present");
 			}
-			if (childDataHandler.getMCTSID_no_Child_ID()!=null && mapc.containsKey(childDataHandler.getMCTSID_no_Child_ID()) ) {
+			if (childDataHandler.getMCTSID_no_Child_ID() != null
+					&& mapc.containsKey(childDataHandler.getMCTSID_no_Child_ID())) {
 
 				childDataHandler.setIs_Valid(false);
 				childDataHandler.setError_Reason("Data already present");
 			}
-			
 
 			if (childDataHandler.getIs_Valid() == true) {
 
 				logger.info("savaChildMctsData " + outputMapper.gson().toJson(childDataHandler) + " to valid record.");
-				// ChildValidDataHandler dataHandler =
-				// childValidDataRepository.save(childDataHandler);
-				// this.setChildOutboundcalls(dataHandler,
-				// childDataHandler.getFileManager());
 				return true;
 			}
 
@@ -841,11 +798,6 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 				logger.info(
 						"savaChildMctsData " + outputMapper.gson().toJson(childDataHandler) + " to invalid record.");
-				// ChildInvalidDataHandler invalidChildDetail =
-				// inputMapper.gson()
-				// .fromJson(outputMapper.gson().toJson(childDataHandler),
-				// ChildInvalidDataHandler.class);
-				// childInvalidDataRepository.save(invalidChildDetail);
 				return false;
 			}
 
@@ -879,14 +831,6 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 		XSSFWorkbook workbook = new XSSFWorkbook(new ByteArrayInputStream(byteArray));
 		return workbook;
 	}
-
-	// private SXSSFWorkbook getSXSSFWorkbook(byte[] byteArray) throws
-	// InvalidFormatException, IOException {
-	//
-	// SXSSFWorkbook workbook = new SXSSFWorkbook(new
-	// ByteArrayInputStream(byteArray));
-	// return workbook;
-	// }
 
 	/**
 	 * method to create mother outbound call
@@ -980,40 +924,40 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 		return "Deatils are updated sucessfully";
 	}
+
 	@Override
 	public FileManager savefilemanger(FileManager fileManager) {
-		// TODO Auto-generated method stub
 		return fileManagerRepository.save(fileManager);
 	}
+
 	@Override
 	public FileManager uploadstatus(String request) throws IEMRException {
-		// TODO Auto-generated method stub
-		
-		FileManager fileManager = InputMapper.gson().fromJson(request,FileManager.class);
-		List<FileManager> file=fileManagerRepository.findTop1ByProviderServiceMapIDOrderByFileIDDesc(fileManager.getProviderServiceMapID());
-		FileManager filem=new FileManager();
-		if(file!=null&& file.size()>0){
-			filem=file.get(0);
-			if(filem!=null && filem.getIsMother()){
-				
-				filem.setValidRecordUpload(mctsDataHandlerRepository.validCount(filem.getFileID())); 
-				filem.setErroredRecordUpload(mctsInvalidDataRepository.invalidCount(filem.getFileID())); 
-			}else{
-				if(filem!=null) {
-				filem.setValidRecordUpload(childValidDataRepository.validCount(filem.getFileID()));
-				filem.setErroredRecordUpload(childInvalidDataRepository.invalidCount(filem.getFileID()));
+
+		FileManager fileManager = InputMapper.gson().fromJson(request, FileManager.class);
+		List<FileManager> file = fileManagerRepository
+				.findTop1ByProviderServiceMapIDOrderByFileIDDesc(fileManager.getProviderServiceMapID());
+		FileManager filem = new FileManager();
+		if (file != null && file.size() > 0) {
+			filem = file.get(0);
+			if (filem != null && filem.getIsMother()) {
+
+				filem.setValidRecordUpload(mctsDataHandlerRepository.validCount(filem.getFileID()));
+				filem.setErroredRecordUpload(mctsInvalidDataRepository.invalidCount(filem.getFileID()));
+			} else {
+				if (filem != null) {
+					filem.setValidRecordUpload(childValidDataRepository.validCount(filem.getFileID()));
+					filem.setErroredRecordUpload(childInvalidDataRepository.invalidCount(filem.getFileID()));
 				}
 			}
 		}
 		return filem;
 	}
-	
-	Date calculateBirthDate(Integer age)
-	{
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.YEAR, -1 * age);
-			Timestamp dob = new Timestamp(cal.getTimeInMillis());
-			Date birthdate =new Date(dob.getTime());
-			return birthdate;
+
+	Date calculateBirthDate(Integer age) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.YEAR, -1 * age);
+		Timestamp dob = new Timestamp(cal.getTimeInMillis());
+		Date birthdate = new Date(dob.getTime());
+		return birthdate;
 	}
 }

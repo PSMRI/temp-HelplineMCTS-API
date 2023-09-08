@@ -24,7 +24,6 @@ package com.iemr.mcts.data.supervisor;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,155 +45,107 @@ import lombok.Data;
 @Entity
 @Table(name = "t_filemanager")
 public class FileManager {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
-	@Column(name="FileID")
+	@Column(name = "FileID")
 	private Long fileID;
-	
+
 	@Expose
-	@Column(name="FileTypeID")
+	@Column(name = "FileTypeID")
 	private Long fileTypeID;
-	
+
 	@Expose
-	@Column(name="FileName")
+	@Column(name = "FileName")
 	private String fileName;
-	
+
 	@Expose
-	@Column(name="FilePath")
+	@Column(name = "FilePath")
 	private String filePath;
-	
+
 	@Expose
-	@Column(name="FileStatusID")
+	@Column(name = "FileStatusID")
 	private Long fileStatusID;
-	
+
 	@Expose
-	@Column(name="UserID")
+	@Column(name = "UserID")
 	private Long userID;
-	
+
 	@Expose
-	@Column(name="TotalRecordCount")
+	@Column(name = "TotalRecordCount")
 	private Long totalRecordCount;
-	
+
 	@Expose
-	@Column(name="ValidRecordCount")
+	@Column(name = "ValidRecordCount")
 	private Long validRecordCount;
-	
+
 	@Expose
-	@Column(name="ErroredRecordCount")
+	@Column(name = "ErroredRecordCount")
 	private Long erroredRecordCount;
-	
+
 	@Expose
 	@Transient
 	private Long validRecordUpload;
-	
+
 	@Expose
 	@Transient
 	private Long erroredRecordUpload;
-	
+
 	@Expose
-	@Column(name="FileLoadDate")
+	@Column(name = "FileLoadDate")
 	private Date fileLoadDate;
-	
+
 	@Expose
-	@Column(name="IsMother")
+	@Column(name = "IsMother")
 	private Boolean isMother;
-	
+
 	@Expose
-	@Column(name="ProviderServiceMapID")
+	@Column(name = "ProviderServiceMapID")
 	private Long providerServiceMapID;
-	
+
 	@Expose
-	@Column(name="MD5CheckSum")
+	@Column(name = "MD5CheckSum")
 	private String md5CheckSum;
-	
+
 	@Expose
-	@Column(name="StatusReason")
+	@Column(name = "StatusReason")
 	private String statusReason;
-	
+
 	@Expose
-	@Column(name="Deleted")
+	@Column(name = "Deleted")
 	private boolean deleted;
-	
+
 	@Expose
-	@Column(name="CreatedBy", insertable = true, updatable = false)
+	@Column(name = "CreatedBy", insertable = true, updatable = false)
 	private String createdBy;
-	
+
 	@Expose
 	@Column(name = "CreatedDate", insertable = false, updatable = false)
 	private Date createdDate;
-	
+
 	@Expose
-	@Column(name="ModifiedBy")
+	@Column(name = "ModifiedBy")
 	private String modifiedBy;
-	
+
 	@Expose
-	@Column(name="LastModDate")
+	@Column(name = "LastModDate")
 	private Date lastModDate;
-	
+
 	@Transient
-//	@Expose
 	private String fileContent;
-	
-	
-	@OneToOne( fetch = FetchType.EAGER)
-    @JoinColumn(name = "FileStatusID",insertable = false, updatable = false)
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "FileStatusID", insertable = false, updatable = false)
 	@Expose
 	private FileStatus fileStatus;
-	/**
-	 * mother data handler mapping
-	 */
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "fileID", insertable = false, updatable = false)
-//	private List<MctsDataReaderDetail> mctsDataReaderDetails;
-// 
-//	/**
-//	 * mother valid data mapping
-//	 */
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fileManager")
-//	private List<MotherValidRecordDetail> motherValidRecordDetails;
-	
-	/**
-	 *child valid data handler for child data mapping
-	 */
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fileManager")
-//	private List<ChildValidDataHandler> childValidDataHandlers;
-//	
-//	/**
-//	 *child invalid data handler for child data mapping
-//	 */
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fileManager")
-//	private List<ChildInvalidDataHandler> childInvalidDataHandlers;
-	
-	/**
-	 *child data reader for child transaction pojop
-	 */
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fileManager")
 	private List<ChildDataReader> childDataReaders;
-	
-	/**
-	 * @return the mctsDataReaderDetails
-	 */
-//	public List<MctsDataReaderDetail> getMctsDataReaderDetails() {
-//		return mctsDataReaderDetails;
-//	}
-//
-//
-//	/**
-//	 * @param mctsDataReaderDetails the mctsDataReaderDetails to set
-//	 */
-//	public void setMctsDataReaderDetails(List<MctsDataReaderDetail> mctsDataReaderDetails) {
-//		this.mctsDataReaderDetails = mctsDataReaderDetails;
-//	}
-	
-	/**
-	 * @return the providerServiceMapID
-	 */
+
 	public Long getProviderServiceMapID() {
 		return providerServiceMapID;
 	}
-
 
 	/**
 	 * @param providerServiceMapID the providerServiceMapID to set
@@ -203,14 +154,12 @@ public class FileManager {
 		this.providerServiceMapID = providerServiceMapID;
 	}
 
-
 	/**
 	 * @return the md5CheckSum
 	 */
 	public String getMd5CheckSum() {
 		return md5CheckSum;
 	}
-
 
 	/**
 	 * @param md5CheckSum the md5CheckSum to set
@@ -219,14 +168,12 @@ public class FileManager {
 		this.md5CheckSum = md5CheckSum;
 	}
 
-
 	/**
 	 * @return the outputMapper
 	 */
 	public static OutputMapper getOutputMapper() {
 		return outputMapper;
 	}
-
 
 	/**
 	 * @param outputMapper the outputMapper to set
@@ -235,14 +182,12 @@ public class FileManager {
 		FileManager.outputMapper = outputMapper;
 	}
 
-
 	/**
 	 * Default Constructor
 	 */
 	public FileManager() {
-		
-	}
 
+	}
 
 	/**
 	 * @return the fileID
@@ -251,14 +196,12 @@ public class FileManager {
 		return fileID;
 	}
 
-
 	/**
 	 * @param fileID the fileID to set
 	 */
 	public void setFileID(Long fileID) {
 		this.fileID = fileID;
 	}
-
 
 	/**
 	 * @return the fileTypeID
@@ -267,14 +210,12 @@ public class FileManager {
 		return fileTypeID;
 	}
 
-
 	/**
 	 * @param fileTypeID the fileTypeID to set
 	 */
 	public void setFileTypeID(Long fileTypeID) {
 		this.fileTypeID = fileTypeID;
 	}
-
 
 	/**
 	 * @return the fileName
@@ -283,14 +224,12 @@ public class FileManager {
 		return fileName;
 	}
 
-
 	/**
 	 * @param fileName the fileName to set
 	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 
 	/**
 	 * @return the filePath
@@ -299,7 +238,6 @@ public class FileManager {
 		return filePath;
 	}
 
-
 	/**
 	 * @param filePath the filePath to set
 	 */
@@ -307,14 +245,12 @@ public class FileManager {
 		this.filePath = filePath;
 	}
 
-
 	/**
 	 * @return the fileStatusID
 	 */
 	public Long getFileStatusID() {
 		return fileStatusID;
 	}
-
 
 	/**
 	 * @param fileStatusID the fileStatusID to set
@@ -330,14 +266,12 @@ public class FileManager {
 		return userID;
 	}
 
-
 	/**
 	 * @param userID the userID to set
 	 */
 	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
-
 
 	/**
 	 * @return the totalRecordCount
@@ -346,14 +280,12 @@ public class FileManager {
 		return totalRecordCount;
 	}
 
-
 	/**
 	 * @param totalRecordCount the totalRecordCount to set
 	 */
 	public void setTotalRecordCount(Long totalRecordCount) {
 		this.totalRecordCount = totalRecordCount;
 	}
-
 
 	/**
 	 * @return the validRecordCount
@@ -362,14 +294,12 @@ public class FileManager {
 		return validRecordCount;
 	}
 
-
 	/**
 	 * @param validRecordCount the validRecordCount to set
 	 */
 	public void setValidRecordCount(Long validRecordCount) {
 		this.validRecordCount = validRecordCount;
 	}
-
 
 	/**
 	 * @return the erroredRecordCount
@@ -378,14 +308,12 @@ public class FileManager {
 		return erroredRecordCount;
 	}
 
-
 	/**
 	 * @param erroredRecordCount the erroredRecordCount to set
 	 */
 	public void setErroredRecordCount(Long erroredRecordCount) {
 		this.erroredRecordCount = erroredRecordCount;
 	}
-
 
 	/**
 	 * @return the fileLoadDate
@@ -394,14 +322,12 @@ public class FileManager {
 		return fileLoadDate;
 	}
 
-
 	/**
 	 * @param fileLoadDate the fileLoadDate to set
 	 */
 	public void setFileLoadDate(Date fileLoadDate) {
 		this.fileLoadDate = fileLoadDate;
 	}
-
 
 	/**
 	 * @return the mD5CheckSum
@@ -410,14 +336,12 @@ public class FileManager {
 		return md5CheckSum;
 	}
 
-
 	/**
 	 * @param mD5CheckSum the mD5CheckSum to set
 	 */
 	public void setmD5CheckSum(String mD5CheckSum) {
 		this.md5CheckSum = mD5CheckSum;
 	}
-
 
 	/**
 	 * @return the deleted
@@ -426,14 +350,12 @@ public class FileManager {
 		return deleted;
 	}
 
-
 	/**
 	 * @param deleted the deleted to set
 	 */
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-
 
 	/**
 	 * @return the createdBy
@@ -442,14 +364,12 @@ public class FileManager {
 		return createdBy;
 	}
 
-
 	/**
 	 * @param createdBy the createdBy to set
 	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-
 
 	/**
 	 * @return the createdDate
@@ -458,14 +378,12 @@ public class FileManager {
 		return createdDate;
 	}
 
-
 	/**
 	 * @param createdDate the createdDate to set
 	 */
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	/**
 	 * @return the modifiedBy
@@ -474,14 +392,12 @@ public class FileManager {
 		return modifiedBy;
 	}
 
-
 	/**
 	 * @param modifiedBy the modifiedBy to set
 	 */
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-
 
 	/**
 	 * @return the lastModDate
@@ -490,44 +406,12 @@ public class FileManager {
 		return lastModDate;
 	}
 
-
 	/**
 	 * @param lastModDate the lastModDate to set
 	 */
 	public void setLastModDate(Date lastModDate) {
 		this.lastModDate = lastModDate;
-	}	
-	
-
-	/**
-	 * @return the childValidDataHandlers
-	 */
-//	public List<ChildValidDataHandler> getChildValidDataHandlers() {
-//		return childValidDataHandlers;
-//	}
-//
-//
-//	/**
-//	 * @param childValidDataHandlers the childValidDataHandlers to set
-//	 */
-//	public void setChildValidDataHandlers(List<ChildValidDataHandler> childValidDataHandlers) {
-//		this.childValidDataHandlers = childValidDataHandlers;
-//	}
-//
-//
-//	/**
-//	 * @return the childInvalidDataHandlers
-//	 */
-//	public List<ChildInvalidDataHandler> getChildInvalidDataHandlers() {
-//		return childInvalidDataHandlers;
-//	}
-//
-//	/**
-//	 * @param childInvalidDataHandlers the childInvalidDataHandlers to set
-//	 */
-//	public void setChildInvalidDataHandlers(List<ChildInvalidDataHandler> childInvalidDataHandlers) {
-//		this.childInvalidDataHandlers = childInvalidDataHandlers;
-//	}
+	}
 
 	/**
 	 * @return the fileContent
@@ -535,7 +419,6 @@ public class FileManager {
 	public String getFileContent() {
 		return fileContent;
 	}
-
 
 	/**
 	 * @param fileContent the fileContent to set
@@ -549,14 +432,10 @@ public class FileManager {
 	 */
 	private static OutputMapper outputMapper = new OutputMapper();
 
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		
+
 		return outputMapper.gson().toJson(this);
 	}
-	
+
 }

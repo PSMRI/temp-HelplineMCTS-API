@@ -67,16 +67,13 @@ public class MctsCallResponseServiceImpl implements MctsCallResponseService {
 		Long mctsCallResponseID = null;
 		int answersDeleted = 0, count = 0;
 		for (MctsCallResponseDetail detail : mctsCallResponseDetails) {
-			
-			//updating the previous answers to false;
-			if(count == 0) 
-				answersDeleted = mctsCallResponseRepository.deletePreviousAnswer(detail.getCallDetailID(),detail.getOutboundCallType());
 
-			// if(detail.getChildID()!=null){
+			if (count == 0)
+				answersDeleted = mctsCallResponseRepository.deletePreviousAnswer(detail.getCallDetailID(),
+						detail.getOutboundCallType());
 
 			mctsCallResponseID = mctsCallResponseRepository.isRecordAvail(detail.getCallDetailID(),
 					detail.getQuestionID());
-			
 
 			if (mctsCallResponseID != null) {
 
@@ -86,7 +83,7 @@ public class MctsCallResponseServiceImpl implements MctsCallResponseService {
 			} else {
 				mctsCallResponseRepository.save(detail);
 			}
-			
+
 			count++;
 
 		}
@@ -100,15 +97,7 @@ public class MctsCallResponseServiceImpl implements MctsCallResponseService {
 		MctsOutboundCallDetail callDetail = inputMapper.gson().fromJson(request, MctsOutboundCallDetail.class);
 		List<MctsCallResponseDetail> callResponseDetails = new ArrayList<MctsCallResponseDetail>();
 
-		// if(callDetail.getOutboundCallType()!=null){
-		//
-		// callResponseDetails =
-		// mctsCallResponseRepository.getMctsCallResponseForOutboundCallType
-		// (callDetail.getCallDetailID());
-		// }else{
-
 		callResponseDetails = mctsCallResponseRepository.getMctsCallResponse(callDetail.getCallDetailID());
-		// }
 		return callResponseDetails.toString();
 	}
 

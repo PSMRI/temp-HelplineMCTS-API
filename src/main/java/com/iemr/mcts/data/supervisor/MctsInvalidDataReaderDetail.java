@@ -25,12 +25,9 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.google.gson.annotations.Expose;
@@ -44,7 +41,7 @@ public class MctsInvalidDataReaderDetail {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Expose
 	private Long MotherInValidRecordID;
-	
+
 	@Expose
 	private Date Date_of_Entry;
 
@@ -441,7 +438,7 @@ public class MctsInvalidDataReaderDetail {
 
 	@Expose
 	private Boolean Is_Error;
-	
+
 	@Expose
 	@Column(name = "FileID")
 	private Long FileID;
@@ -467,15 +464,10 @@ public class MctsInvalidDataReaderDetail {
 
 	@Expose
 	private Date LastModDate;
-	
+
 	@Expose
 	private String InValid_Reason;
-	
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "FileID", referencedColumnName="fileID", insertable = true, updatable = false)
-////	@Expose
-//	private FileManager fileManager;
-	
+
 	/**
 	 * @return the isAllocated
 	 */
@@ -489,20 +481,6 @@ public class MctsInvalidDataReaderDetail {
 	public void setIsAllocated(Boolean isAllocated) {
 		IsAllocated = isAllocated;
 	}
-
-	/**
-	 * @return the fileManager
-	 */
-//	public FileManager getFileManager() {
-//		return fileManager;
-//	}
-//
-//	/**
-//	 * @param fileManager the fileManager to set
-//	 */
-//	public void setFileManager(FileManager fileManager) {
-//		this.fileManager = fileManager;
-//	}
 
 	/**
 	 * @return the is_Valid
@@ -571,7 +549,7 @@ public class MctsInvalidDataReaderDetail {
 	 * @param eDD the eDD to set
 	 */
 	public void setEDD(Date eDD) {
-		
+
 		EDD = eDD;
 	}
 
@@ -605,7 +583,9 @@ public class MctsInvalidDataReaderDetail {
 
 	private static OutputMapper outputMapper = new OutputMapper();
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -613,7 +593,9 @@ public class MctsInvalidDataReaderDetail {
 		return outputMapper.gson().toJson(this);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -623,8 +605,7 @@ public class MctsInvalidDataReaderDetail {
 		result = prime * result + ((MCTSID_no == null) ? 0 : MCTSID_no.hashCode());
 		return result;
 	}
-	
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -633,9 +614,8 @@ public class MctsInvalidDataReaderDetail {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-	
-		
+
 		return true;
 	}
-	
+
 }

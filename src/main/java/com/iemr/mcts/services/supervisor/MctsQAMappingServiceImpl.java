@@ -118,9 +118,6 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 
 		for (MctsQAMappingDetail detail : mappingDetails) {
 
-//			QuestionnaireDetail checkRank = questionnaireRepository.checkRank(detail.getQuestionnaireDetail().getQuestionRank(),
-//					detail.getOutboundCallType(),detail.getProviderServiceMapID());
-
 			// checking the rank of the adding question
 			MctsQAMappingDetail checkRank = mctsQAMappingRepository.checkRank(
 					detail.getQuestionnaireDetail().getQuestionRank(), detail.getOutboundCallType(),
@@ -143,28 +140,24 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 
 			}
 
-//			// saving questions
-//			QuestionnaireDetail questionnaireDetail = questionnaireRepository.save(detail.getQuestionnaireDetail());
-
 			// saving options of the questions.
-			if(questionnaireDetail != null)
-			{
-			ArrayList<MctsQuestionValues> mctsQuestionValues = questionnaireDetail.getQuestionOptions();
-			for (MctsQuestionValues options : mctsQuestionValues) {
-				options.setCreatedBy(questionnaireDetail.getCreatedBy());
-				options.setQuestionID(questionnaireDetail.getQuestionID());
-				options.setProviderServiceMapID(questionnaireDetail.getProviderServiceMapID());
+			if (questionnaireDetail != null) {
+				ArrayList<MctsQuestionValues> mctsQuestionValues = questionnaireDetail.getQuestionOptions();
+				for (MctsQuestionValues options : mctsQuestionValues) {
+					options.setCreatedBy(questionnaireDetail.getCreatedBy());
+					options.setQuestionID(questionnaireDetail.getQuestionID());
+					options.setProviderServiceMapID(questionnaireDetail.getProviderServiceMapID());
 
-			}
-			mctsQuestionValuesRepository.save(mctsQuestionValues);
+				}
+				mctsQuestionValuesRepository.save(mctsQuestionValues);
 
-			detail.setQuestionID(questionnaireDetail.getQuestionID());
-			// saving mapping
-			mctsQAMappingRepository.save(detail);
+				detail.setQuestionID(questionnaireDetail.getQuestionID());
+				// saving mapping
+				mctsQAMappingRepository.save(detail);
 			}
 		}
 
-		return "Successfully added questions";// mctsQAMappingRepository.save(mappingDetail).toString();
+		return "Successfully added questions";
 	}
 
 	/*
@@ -253,69 +246,67 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 		int deleted = 0;
 		String response = null;
 		MctsQAMappingDetail mappingDetail = InputMapper.gson().fromJson(request, MctsQAMappingDetail.class);
-		
-		if(mappingDetail.getQuestionnaireDetail().getQuestionRank() == null) {
+
+		if (mappingDetail.getQuestionnaireDetail().getQuestionRank() == null) {
 			deleted = mctsQAMappingRepository.markDelete(mappingDetail.getQuestionID());
-		}else {
+		} else {
 			// checking the rank of the adding question
-			int degradeRank = mctsQAMappingRepository.degradeRank(mappingDetail.getQuestionnaireDetail().getQuestionRank(),
-					mappingDetail.getOutboundCallType(), mappingDetail.getProviderServiceMapID(),
-					mappingDetail.getEffectiveFrom());
+			int degradeRank = mctsQAMappingRepository.degradeRank(
+					mappingDetail.getQuestionnaireDetail().getQuestionRank(), mappingDetail.getOutboundCallType(),
+					mappingDetail.getProviderServiceMapID(), mappingDetail.getEffectiveFrom());
 			if (degradeRank > 0) {
 				deleted = mctsQAMappingRepository.markDelete(mappingDetail.getQuestionID());
-				
-				if(mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Yes/No") 
-					|| mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Multiple")
-					|| mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("DropDown")) {
+
+				if (mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Yes/No")
+						|| mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Multiple")
+						|| mappingDetail.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("DropDown")) {
 					deleted = 0;
 					deleted = mctsQuestionValuesRepository.deleteQuestionValues(mappingDetail.getQuestionID());
 				}
-			}			
-			
-		}		
-		
-		
-		if(deleted  > 0)
+			}
+
+		}
+
+		if (deleted > 0)
 			response = "Deleted successfully";
-//		else
-//			response = "Question not deleted successfully";
-		
+
 		return response;
 	}
-	
+
 	@Override
 	public String deleteMultipleQuestions(String request) throws IEMRException {
 		MctsQAMappingDetail[] mappingDetail = InputMapper.gson().fromJson(request, MctsQAMappingDetail[].class);
-		int index = 0,deleted = 0;
+		int index = 0, deleted = 0;
 		String response = null;
-		for(MctsQAMappingDetail questionDelete : mappingDetail) {
-			
-			if(questionDelete.getQuestionnaireDetail().getQuestionRank() == null) {
+		for (MctsQAMappingDetail questionDelete : mappingDetail) {
+
+			if (questionDelete.getQuestionnaireDetail().getQuestionRank() == null) {
 				deleted = mctsQAMappingRepository.markDelete(questionDelete.getQuestionID());
-			}else {
-				questionDelete.getQuestionnaireDetail().setQuestionRank(questionDelete.getQuestionnaireDetail().getQuestionRank()-index);
-				int degradeRank = mctsQAMappingRepository.degradeRank(questionDelete.getQuestionnaireDetail().getQuestionRank(),
-						questionDelete.getOutboundCallType(), questionDelete.getProviderServiceMapID(),
-						questionDelete.getEffectiveFrom());
+			} else {
+				questionDelete.getQuestionnaireDetail()
+						.setQuestionRank(questionDelete.getQuestionnaireDetail().getQuestionRank() - index);
+				int degradeRank = mctsQAMappingRepository.degradeRank(
+						questionDelete.getQuestionnaireDetail().getQuestionRank(), questionDelete.getOutboundCallType(),
+						questionDelete.getProviderServiceMapID(), questionDelete.getEffectiveFrom());
 				if (degradeRank > 0) {
 					deleted = mctsQAMappingRepository.markDelete(questionDelete.getQuestionID());
-					if(questionDelete.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Yes/No") 
+					if (questionDelete.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Yes/No")
 							|| questionDelete.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("Multiple")
 							|| questionDelete.getQuestionnaireDetail().getAnswerType().equalsIgnoreCase("DropDown")) {
-							deleted = 0;
-							deleted = mctsQuestionValuesRepository.deleteQuestionValues(questionDelete.getQuestionID());
-						}
+						deleted = 0;
+						deleted = mctsQuestionValuesRepository.deleteQuestionValues(questionDelete.getQuestionID());
+					}
 					index++;
-				}else {
+				} else {
 					deleted = 0;
 				}
-			}			
-							
+			}
+
 		}
-		if(deleted > 0) {
+		if (deleted > 0) {
 			response = "Deleted successfully";
 		}
-		
+
 		return response;
 	}
 
@@ -364,7 +355,7 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 				questionnaireDetail.getProviderServiceMapID());
 		if (success == 1)
 			response = "Derived question added successfully";
-		
+
 		return response;
 	}
 
@@ -382,13 +373,10 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 
 		if (mctsQAMappingDetail.getOutboundCallType() != null) {
 
-			// interaction questions needs to be added here mctsQAMappingDetailsParent =
-			
 			mctsQAMappingDetailsParent = mctsQAMappingRepository.getParentQuestionsTypeList(
 					mctsQAMappingDetail.getOutboundCallType(), mctsQAMappingDetail.getProviderServiceMapID(),
 					mctsQAMappingDetail.getEffectiveFrom());
 
-			
 			mctsQAMappingDetailsChild = mctsQAMappingRepository.getChildQuestionsTypeList(
 					mctsQAMappingDetail.getOutboundCallType(), mctsQAMappingDetail.getProviderServiceMapID(),
 					mctsQAMappingDetail.getEffectiveFrom());
@@ -396,8 +384,8 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 			if (mctsOutboundCall != null) {
 
 				if (mctsOutboundCall != null) {
-					mctsCallResponseDetails = mctsCallResponseRepository
-							.getMctsCallResponseForAgent(mctsCallQAUtils.getCallDetailID(), mctsQAMappingDetail.getOutboundCallType());
+					mctsCallResponseDetails = mctsCallResponseRepository.getMctsCallResponseForAgent(
+							mctsCallQAUtils.getCallDetailID(), mctsQAMappingDetail.getOutboundCallType());
 				}
 
 				JSONObject json = null;

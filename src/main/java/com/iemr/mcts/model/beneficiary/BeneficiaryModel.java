@@ -37,17 +37,12 @@ import com.iemr.mcts.model.userbeneficiary.Status;
 import lombok.Data;
 
 @Data
-public class BeneficiaryModel
-{
-	
+public class BeneficiaryModel {
+
 	private Long beneficiaryRegID;
 	private BeneficiaryDemographicsModel i_bendemographics;
-	// private List<BenMedHistoryModel> t_benmedhistory;
 	private List<BenPhoneMapModel> benPhoneMaps;
 	private List<BenPhoneMapModel> parentBenPhoneMaps;
-	// private List<OutboundCallRequestModel> outboundCallRequests;
-	// private List<BeneficiaryCallModel> beneficiaryCalls;
-	// private List<FeedbackDetailsModel> feedbacks;
 	private String beneficiaryID;
 	private Short titleId;
 	private String titleName;
@@ -69,9 +64,9 @@ public class BeneficiaryModel
 	private Timestamp dOB;
 	private Integer age;
 	private String fatherName;
-	private String motherName;// newly added
+	private String motherName;
 	private String spouseName;
-	private SimpleDateFormat formatYear/* = new SimpleDateFormat("yyyy") */;
+	private SimpleDateFormat formatYear;
 	private String govtIdentityNo;
 	private Short govtIdentityTypeID;
 	private GovtIdentityType govtIdentityType;
@@ -81,33 +76,31 @@ public class BeneficiaryModel
 	private String createdBy;
 	private Timestamp createdDate;
 	private String modifiedBy;
-	//private Timestamp lastModDate;
 	private Boolean isHIVPos;
 	private String placeOfWork;
 	private String remarks;
 	private Long providerServiceMapID;
 	private List<BeneficiaryIdentityModel> beneficiaryIdentities;
-	
-	//For Data Sync
+
+	// For Data Sync
 	private Integer vanID;
-	
+
 	private Integer actualAge;
 
 	public BeneficiaryModel() {
-		
-		
+
 	}
-	
-	public static Date getJavaSqlData(Timestamp timestamp)
-	{
-		if(timestamp!=null) {
-		LocalDateTime ld = timestamp.toLocalDateTime();
-		return Date.valueOf(ld.toLocalDate());}
-		
+
+	public static Date getJavaSqlData(Timestamp timestamp) {
+		if (timestamp != null) {
+			LocalDateTime ld = timestamp.toLocalDateTime();
+			return Date.valueOf(ld.toLocalDate());
+		}
+
 		else {
-			
+
 			Date d = null;
-			
+
 			return d;
 		}
 	}

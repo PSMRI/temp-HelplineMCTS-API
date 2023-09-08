@@ -23,7 +23,6 @@ package com.iemr.mcts.model.beneficiary;
 
 import java.sql.Timestamp;
 
-//import com.iemr.common.data.callhandling.CallType;
 import com.iemr.mcts.model.user.OutboundCallRequestModel;
 
 import lombok.Data;
@@ -41,7 +40,6 @@ public @Data class BeneficiaryCallModel
 	private String remarks;
 	private String servicesProvided;
 	private Integer callTypeID;
-	//private CallType callTypeObj;
 	private String callClosureType;
 	private Integer dispositionStatusID;
 	private Integer callReceivedUserID;

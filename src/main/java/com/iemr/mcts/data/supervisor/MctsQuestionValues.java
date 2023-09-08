@@ -42,19 +42,19 @@ public class MctsQuestionValues {
 	@Expose
 	@Column(name = "QuestionValuesID")
 	private Integer questionValuesID;
-	
+
 	@Expose
 	@Column(name = "QuestionID")
 	private Integer questionID;
-	
+
 	@Expose
 	@Column(name = "QuestionValues")
 	private String dropDownOptions;
-	
+
 	@Expose
 	@Column(name = "ProviderServiceMapID")
 	private Long providerServiceMapID;
-	
+
 	@Expose
 	@Column(name = "Deleted")
 	private Boolean deleted = false;
@@ -78,17 +78,10 @@ public class MctsQuestionValues {
 	@Expose
 	@Column(name = "LastModDate")
 	private Date lastModDate;
-	
+
 	@Transient
 	@Expose
 	private Boolean isDisabled;
-	
-	
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mctsQuestionValues")
-//	private QuestionnaireDetail questionnaireDetail;
-	
-//	@OneToOne(fetch = FetchType.LAZY, mappedBy = "mctsQuestionValues")
-//	private MctsQAMappingDetail mctsQAMappingDetail;
 
 	public Integer getQuestionValuesID() {
 		return questionValuesID;
@@ -104,7 +97,7 @@ public class MctsQuestionValues {
 
 	public void setQuestionID(Integer questionID) {
 		this.questionID = questionID;
-	}	
+	}
 
 	public Boolean getDeleted() {
 		return deleted;
@@ -162,14 +155,6 @@ public class MctsQuestionValues {
 		this.dropDownOptions = dropDownOptions;
 	}
 
-//	public QuestionnaireDetail getQuestionnaireDetail() {
-//		return questionnaireDetail;
-//	}
-//
-//	public void setQuestionnaireDetail(QuestionnaireDetail questionnaireDetail) {
-//		this.questionnaireDetail = questionnaireDetail;
-//	}
-
 	public Long getProviderServiceMapID() {
 		return providerServiceMapID;
 	}
@@ -178,7 +163,4 @@ public class MctsQuestionValues {
 		this.providerServiceMapID = providerServiceMapID;
 	}
 
-	
-	
-	
 }

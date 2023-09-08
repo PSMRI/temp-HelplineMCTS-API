@@ -120,7 +120,6 @@ public interface CallConfigurationRepository extends CrudRepository<CallConfigur
 	
 	
 	/*
-	 * modified by - DU20091017
 	 * mother data should only have ANC calls;
 	 */
 	@Query("select c from CallConfigurationDetail c "
@@ -130,7 +129,6 @@ public interface CallConfigurationRepository extends CrudRepository<CallConfigur
 	public ArrayList<CallConfigurationDetail> getMotherConfigTerms(@Param("providerServiceMapID") Long providerServiceMapID);
 	
 	/*
-	 * modified by - DU20091017
 	 * Child data should only have PNC calls;
 	 */
 	@Query("select c from CallConfigurationDetail c "

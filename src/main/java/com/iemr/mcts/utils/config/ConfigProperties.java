@@ -40,7 +40,6 @@ import org.springframework.stereotype.Component;
 				 * (defaultAutowire = Autowire.BY_TYPE, defaultLazy = Lazy.FALSE
 				 */
 @PropertySource("classpath:/application.properties")
-// @Component
 @Component
 public class ConfigProperties {
 	private static Properties properties;
@@ -56,14 +55,10 @@ public class ConfigProperties {
 		if (properties == null) {
 			properties = new Properties();
 
-			// FileInputStream fis;
 			try {
-				// this.getClass().getResourceAsStream(
 
 				InputStream fis = ConfigProperties.class.getResourceAsStream("/application.properties");
 				properties.load(fis);
-				// properties.
-				// fis.close();
 			} catch (IOException e) {
 				logger.error("Loading of config file failed with error " + e.getLocalizedMessage(), e);
 			}

@@ -36,7 +36,6 @@ public class BeneficiarySearchModal {
 	private String middleName;
 	private String lastName;
 	private Short genderID;
-//	private String genderName;
 	private Timestamp dOB;
 	private String govtIdentityNo;
 	private Short govtIdentityTypeID;
