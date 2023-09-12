@@ -529,7 +529,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 						List<String> headers = fileProcessor.getHeadersAsList(datatypeSheet.getRow(0));
 						Set<String> keySet = new HashSet<String>(fieldsMap.keySet());
-
+						// New logic implemented for accepting more columns
 						if (keySet.size() <= 0 && headers.size() <= 0) {
 							message = "Data File Is Empty Please Fill The Mandatory Fields Or User Is not Mapped With State";
 							uploaddata.setMessage(message);

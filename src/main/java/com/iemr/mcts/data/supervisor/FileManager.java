@@ -143,6 +143,9 @@ public class FileManager {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "fileManager")
 	private List<ChildDataReader> childDataReaders;
 
+	/**
+	 * @return the providerServiceMapID
+	 */
 	public Long getProviderServiceMapID() {
 		return providerServiceMapID;
 	}
@@ -432,6 +435,11 @@ public class FileManager {
 	 */
 	private static OutputMapper outputMapper = new OutputMapper();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 

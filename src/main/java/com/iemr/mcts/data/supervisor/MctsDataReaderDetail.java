@@ -507,6 +507,9 @@ public class MctsDataReaderDetail implements Serializable {
 	@Expose
 	private String InValid_Reason;
 
+	/**
+	 * @return the isAllocated
+	 */
 	public Boolean getIsAllocated() {
 		return IsAllocated;
 	}
@@ -518,6 +521,9 @@ public class MctsDataReaderDetail implements Serializable {
 		IsAllocated = isAllocated;
 	}
 
+	/**
+	 * @return the is_Valid
+	 */
 	public Boolean getIs_Valid() {
 		return Is_Valid;
 	}

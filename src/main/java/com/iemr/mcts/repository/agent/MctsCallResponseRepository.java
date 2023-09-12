@@ -52,7 +52,7 @@ public interface MctsCallResponseRepository extends CrudRepository<MctsCallRespo
 
 	@Query("select res from MctsCallResponseDetail res join res.questionnaireDetail where res.callDetailID = :callDetailID "
 			+ " and res.deleted = false ")
-	public ArrayList<MctsCallResponseDetail> getMctsCallResponse(@Param("callDetailID") Long callDetailID);// ,
+	public ArrayList<MctsCallResponseDetail> getMctsCallResponse(@Param("callDetailID") Long callDetailID);
 
 	@Transactional
 	@Modifying

@@ -64,9 +64,9 @@ public class BeneficiaryModel {
 	private Timestamp dOB;
 	private Integer age;
 	private String fatherName;
-	private String motherName;
+	private String motherName;// newly added
 	private String spouseName;
-	private SimpleDateFormat formatYear;
+	private SimpleDateFormat formatYear/* = new SimpleDateFormat("yyyy") */;
 	private String govtIdentityNo;
 	private Short govtIdentityTypeID;
 	private GovtIdentityType govtIdentityType;

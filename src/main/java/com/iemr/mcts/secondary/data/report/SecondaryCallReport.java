@@ -144,7 +144,7 @@ public class SecondaryCallReport implements Serializable {
 	@Expose
 	@Column(name = "CZCallDuration")
 	private Integer czCallDuration;
-
+	// search params
 	@Transient
 	private Timestamp startDateTime;
 

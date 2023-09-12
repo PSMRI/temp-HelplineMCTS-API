@@ -27,7 +27,7 @@ import java.util.Date;
 import org.springframework.scheduling.annotation.Scheduled;
 
 public class SchedulerClass {
-
+	// later scheduler format
 	@Scheduled(fixedRate = 5000)
 	public static void main(String[] args) {
 
