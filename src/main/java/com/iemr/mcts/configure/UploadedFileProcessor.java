@@ -149,7 +149,9 @@ public class UploadedFileProcessor {
 
 		try {
 			String fileName = file.getName();
-			String sanitizedFile = (URI.create(fileName).normalize()).toString();
+			String pattern = "[^a-zA-Z0-9.-]";
+        	String fileName2 = (URI.create(fileName).normalize()).toString();
+        	String sanitizedFile=fileName2.replaceAll(pattern, "");
 			File convFile = new File(sanitizedFile);
 			FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 			fileInputStream = new FileInputStream(convFile);
@@ -203,7 +205,9 @@ public class UploadedFileProcessor {
 
 		try {
 			String fileName = file.getName();
-			String sanitizedFile = (URI.create(fileName).normalize()).toString();
+			String pattern = "[^a-zA-Z0-9.-]";
+        	String fileName2 = (URI.create(fileName).normalize()).toString();
+        	String sanitizedFile=fileName2.replaceAll(pattern, "");
 			File convFile = new File(sanitizedFile);
 			FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 			fileInputStream = new FileInputStream(convFile);
