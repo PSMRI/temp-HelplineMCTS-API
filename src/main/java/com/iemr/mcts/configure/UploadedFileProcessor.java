@@ -118,11 +118,11 @@ public class UploadedFileProcessor {
 		byte[] digest = null;
 
 		try {
-			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			digest = md5.digest(byteArray);
+    	MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+   		digest = sha256.digest(byteArray);
 		} catch (NoSuchAlgorithmException e) {
-
-			logger.error(e.getMessage());
+    
+    	logger.error("Error initializing hashing algorithm: " + e.getMessage());
 		}
 
 		return new BigInteger(1, digest).toString(16);
