@@ -9,4 +9,4 @@ bin
 .idea
 
 # Properties
-src/main/environment/mcts_example.properties
+src/main/environment/mcts_local.properties
