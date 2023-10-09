@@ -6,6 +6,7 @@ bin
 *.bat
 .factorypath
 /logs
+.idea
 
 # Properties
-src/main/environment/mcts_local.properties
+src/main/environment/mcts_example.properties

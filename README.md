@@ -31,11 +31,12 @@ To build the HelplineMCTS microservice from source, follow these steps:
 ### Installation
 
 1. Clone the repository to your local machine.
+2. You can copy `mcts_example.properties` to `mcts_local.properties` and edit the file accordingly. The file is under `src/main/environment` folder.
 2. Install the dependencies and build the module:
    - Run `mvn clean install` in the project directory.
 3. Run the development server:
    - Start the Redis server.
-   - Run `mvn spring-boot:run` in the project directory.
+   - Run `mvn spring-boot:run -DENV_VAR=local` in the project directory.
    - Open your browser and go to `http://localhost:8080/swagger-ui.html#!/` to access the Swagger API documentation.
 
 ## Usage
