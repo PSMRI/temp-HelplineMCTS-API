@@ -54,10 +54,10 @@ public interface MctsOutboundCallDetailRepository extends CrudRepository<MctsOut
 	@Transactional
 	@Modifying
 	@Query("update MctsOutboundCallDetail cd set cd.callTypeID = :callTypeID, cd.lastModDate = :lastModDate, "
-			+ "cd.remark = :remark, cd.beneficiaryRegID = :beneficiaryRegID, cd.callEndTime = :callEndTime, cd.callDuration = :callDuration where cd.callDetailID = :callDetailID")
+			+ "cd.remark = :remark,cd.beneficiaryRegID = :beneficiaryRegID, cd.callEndTime = :callEndTime, cd.callDuration = :callDuration ,cd.isOutbound = :isOutbound where cd.callDetailID = :callDetailID")
 	public int updateCallHistory(@Param("callTypeID") Integer callTypeID, @Param("lastModDate") Timestamp lastModDate,
 			@Param("remark") String remark, @Param("callDetailID") Long callDetailID, @Param("beneficiaryRegID") Long beneficiaryRegID,
-			@Param("callEndTime") Timestamp callEndTime, @Param("callDuration") String callDuration);
+			@Param("callEndTime") Timestamp callEndTime, @Param("callDuration") String callDuration,@Param("isOutbound") Boolean isOutbound);
 	
 	@Transactional
 	@Modifying
