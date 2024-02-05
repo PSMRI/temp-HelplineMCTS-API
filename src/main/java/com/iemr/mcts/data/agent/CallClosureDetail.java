@@ -113,6 +113,18 @@ public class CallClosureDetail {
 	@Expose
 	@SerializedName("CallEndTime")
 	private Timestamp callEndTime;
+	
+	@Expose
+	@SerializedName("IsOutbound")
+	private Boolean isOutbound = true;
+
+	public Boolean getIsOutbound() {
+		return isOutbound;
+	}
+
+	public void setIsOutbound(Boolean isOutbound) {
+		this.isOutbound = isOutbound;
+	}
 
 	/**
 	 * @return the mctsOutboundCall
