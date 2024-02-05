@@ -388,7 +388,7 @@ public class MctsOutboundCallDetailServiceImpl implements MctsOutboundCallDetail
 
 		mctsOutboundCallDetailRepository.updateCallHistory(callClosureDetail.getCallTypeID(),
 				Timestamp.valueOf(LocalDateTime.now()), callClosureDetail.getRemarks(),
-				callClosureDetail.getCallDetailID(), mctsOutboundCall.getBeneficiaryRegID(), callEndTime, callDuration);
+				callClosureDetail.getCallDetailID(), mctsOutboundCall.getBeneficiaryRegID(), callEndTime, callDuration, callClosureDetail.getIsOutbound() );
 
 		if (changeLog != null) {
 
