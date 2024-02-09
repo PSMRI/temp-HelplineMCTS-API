@@ -27,7 +27,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -168,7 +168,7 @@ public class MctsDataTransactionServiceImpl implements MctsDataTransactionServic
 		if (mctsOutboundCall.getChildValidDataHandler() != null) {
 
 			ChildValidDataHandler old = childValidDataRepository
-					.findOne(mctsOutboundCall.getChildValidDataHandler().getRowID());
+					.findById(mctsOutboundCall.getChildValidDataHandler().getRowID()).get();
 
 			if (!old.toString().equals(mctsOutboundCall.getChildValidDataHandler().toString())) {
 
@@ -190,7 +190,7 @@ public class MctsDataTransactionServiceImpl implements MctsDataTransactionServic
 		} else {
 
 			MctsDataReaderDetail old = mctsDataHandlerRepository
-					.findOne(mctsOutboundCall.getMctsDataReaderDetail().getMotherValidRecordID());
+					.findById(mctsOutboundCall.getMctsDataReaderDetail().getMotherValidRecordID()).get();
 			if (!old.toString().equals(mctsOutboundCall.getMctsDataReaderDetail().toString())) {
 
 				if (motherFields == null) {

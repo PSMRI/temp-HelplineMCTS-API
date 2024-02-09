@@ -32,7 +32,8 @@ import com.iemr.mcts.services.agent.ChildCongenitalAnomaliesService;
 import com.iemr.mcts.services.agent.CongenitalAnomaliesService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+
 
 @RestController
 @RequestMapping("/congenitalAnomaliesController")
@@ -67,7 +68,7 @@ public class CongenitalAnomaliesController {
 
 	@CrossOrigin()
 	@RequestMapping(value = "/get/child/conganomolies", method = RequestMethod.POST, headers = "Authorization")
-	public String getchildCA(@ApiParam("{\"childID\":\"Integer \"}") @RequestBody String request) {
+	public String getchildCA(@Param("{\"childID\":\"Integer \"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 		try {

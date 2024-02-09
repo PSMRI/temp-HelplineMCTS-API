@@ -21,23 +21,23 @@
 */
 package com.iemr.mcts.utils.http;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.iemr.mcts.utils.response.OutputResponse;
 import com.iemr.mcts.utils.sessionobject.SessionObject;
 import com.iemr.mcts.utils.validator.Validator;
 
 @Component
-public class HTTPRequestInterceptor extends HandlerInterceptorAdapter
+public class HTTPRequestInterceptor implements HandlerInterceptor
 {
 	private Validator validator;
 

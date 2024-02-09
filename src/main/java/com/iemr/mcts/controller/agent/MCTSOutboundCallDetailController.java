@@ -21,7 +21,7 @@
 */
 package com.iemr.mcts.controller.agent;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,8 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.mcts.services.agent.MctsOutboundCallDetailService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("mctsOutboundCallDetailController")
@@ -53,9 +53,9 @@ public class MCTSOutboundCallDetailController {
 	 * @return String count of allocated calls
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get beneficiary details")
+	@Operation(summary = "Get beneficiary details")
 	@RequestMapping(value = "/get/benificiary/details", method = RequestMethod.POST, headers = "Authorization")
-	public String getBeneficiaryDetails(@ApiParam("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request,
+	public String getBeneficiaryDetails(@Param("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 
 		OutputResponse response = new OutputResponse();
@@ -76,10 +76,10 @@ public class MCTSOutboundCallDetailController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Create call history")
+	@Operation(summary = "Create call history")
 	@RequestMapping(value = "/put/call/history", method = RequestMethod.POST, headers = "Authorization")
 	public String getVariables(
-			@ApiParam("{\"czentrixCallID\":\"String\", \"allocatedUserID\":\"Integer \"}") @RequestBody String request) {
+			@Param("{\"czentrixCallID\":\"String\", \"allocatedUserID\":\"Integer \"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -102,9 +102,9 @@ public class MCTSOutboundCallDetailController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Get change log")
+	@Operation(summary = "Get change log")
 	@RequestMapping(value = "/get/change/log", method = RequestMethod.POST, headers = "Authorization")
-	public String getChangeLog(@ApiParam("{\"childID or mothetID\":\"String\"}") @RequestBody String request) {
+	public String getChangeLog(@Param("{\"childID or mothetID\":\"String\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -127,10 +127,10 @@ public class MCTSOutboundCallDetailController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Send SMS advice")
+	@Operation(summary = "Send SMS advice")
 	@RequestMapping(value = "/put/sms/advice", method = RequestMethod.POST, headers = "Authorization")
 	public String sendSmsAdvise(
-			@ApiParam("{\"smsAdvice\":\"String\", \"callDetailID\":\"Integer\"}") @RequestBody String request) {
+			@Param("{\"smsAdvice\":\"String\", \"callDetailID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -153,7 +153,7 @@ public class MCTSOutboundCallDetailController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Get SMS advice")
+	@Operation(summary = "Get SMS advice")
 	// @RequestMapping(value = "/get/sms/advise", method = RequestMethod.POST,
 	// headers = "Authorization")
 	public String getSmsAdvise(@RequestBody String request) {
@@ -179,9 +179,9 @@ public class MCTSOutboundCallDetailController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Get case record")
+	@Operation(summary = "Get case record")
 	@RequestMapping(value = "/case/sheet", method = RequestMethod.POST, headers = "Authorization")
-	public String caseSheet(@ApiParam("{\"callDetailID\":\"Integer\"}") @RequestBody String request,
+	public String caseSheet(@Param("{\"callDetailID\":\"Integer\"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 
 		OutputResponse response = new OutputResponse();

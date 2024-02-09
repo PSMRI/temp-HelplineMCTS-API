@@ -51,7 +51,7 @@ public interface FileManagerRepository extends CrudRepository<FileManager, Long>
 	 * @param fileID
 	 * @return
 	 */
-	@Query("select f.providerServiceMapID from FileManager f where f.fileID = :fileID and f.deleted = 0 ")
+	@Query("select f.providerServiceMapID from FileManager f where f.fileID = :fileID and f.deleted = false ")
 	public Long getProviderServiceMapID(@Param("fileID") Long fileID);
 	
 	/**
@@ -59,7 +59,7 @@ public interface FileManagerRepository extends CrudRepository<FileManager, Long>
 	 * @param providerServiceMapID
 	 * @return
 	 */
-	@Query("select provider.stateID from ProviderServiceMapDetail provider where provider.providerServiceMapID = :providerServiceMapID and provider.deleted = 0 ")
+	@Query("select provider.stateID from ProviderServiceMapDetail provider where provider.providerServiceMapID = :providerServiceMapID and provider.deleted = false ")
 	public Integer getStateID(@Param("providerServiceMapID") Long providerServiceMapID);
 	
 	/**
@@ -67,7 +67,7 @@ public interface FileManagerRepository extends CrudRepository<FileManager, Long>
 	 * @param stateID
 	 * @return
 	 */
-	@Query("select district.districtID from District district where district.stateID = :stateID and district.districtName = :districtName and district.deleted = 0 ")
+	@Query("select district.districtID from District district where district.stateID = :stateID and district.districtName = :districtName and district.deleted = false ")
 	public Integer getDistrictID(@Param("stateID") Integer stateID, @Param("districtName") String districtName);
 	
 	/**
@@ -75,7 +75,7 @@ public interface FileManagerRepository extends CrudRepository<FileManager, Long>
 	 * @param districtID
 	 * @return
 	 */
-	@Query("select districtBlock.blockID from DistrictBlock districtBlock where districtBlock.districtID = :districtID and districtBlock.blockName = :blockName and districtBlock.deleted = 0 ")
+	@Query("select districtBlock.blockID from DistrictBlock districtBlock where districtBlock.districtID = :districtID and districtBlock.blockName = :blockName and districtBlock.deleted = false ")
 	public Integer getBlockID(@Param("districtID") Integer districtID, @Param("blockName") String blockName);
 	
 	/**
@@ -83,7 +83,7 @@ public interface FileManagerRepository extends CrudRepository<FileManager, Long>
 	 * @param blockID
 	 * @return
 	 */
-	@Query("select village.districtBranchID from DistrictBranchMapping village where village.blockID = :blockID and village.villageName = :villageName and village.deleted = 0 ")
+	@Query("select village.districtBranchID from DistrictBranchMapping village where village.blockID = :blockID and village.villageName = :villageName and village.deleted = false ")
 	public Integer getVillageID(@Param("blockID") Integer blockID, @Param("villageName") String villageName);
 
 

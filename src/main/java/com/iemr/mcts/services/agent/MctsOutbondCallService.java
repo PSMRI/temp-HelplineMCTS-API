@@ -21,7 +21,7 @@
 */
 package com.iemr.mcts.services.agent;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.iemr.mcts.utils.exception.IEMRException;
 

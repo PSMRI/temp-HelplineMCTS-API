@@ -149,7 +149,7 @@ public class MctsQAMappingServiceImpl implements MctsQAMappingService {
 					options.setProviderServiceMapID(questionnaireDetail.getProviderServiceMapID());
 
 				}
-				mctsQuestionValuesRepository.save(mctsQuestionValues);
+				mctsQuestionValuesRepository.saveAll(mctsQuestionValues);
 
 				detail.setQuestionID(questionnaireDetail.getQuestionID());
 				// saving mapping

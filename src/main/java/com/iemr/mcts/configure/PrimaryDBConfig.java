@@ -21,11 +21,11 @@
 */
 package com.iemr.mcts.configure;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolConfiguration;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -40,6 +40,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.iemr.mcts.utils.config.ConfigProperties;
 
+import jakarta.persistence.EntityManagerFactory;
+
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(entityManagerFactoryRef = "entityManagerFactory", basePackages = { "com.iemr.mcts.repository",
@@ -49,7 +51,7 @@ public class PrimaryDBConfig {
 	@Bean(name = "dataSource")
 	@ConfigurationProperties(prefix = "spring.datasource")
 	public DataSource dataSource() {
-		PoolConfiguration p = new PoolProperties();// change wrt to common
+		PoolConfiguration p = new PoolProperties();
 		p.setMaxActive(30);
 		p.setMaxIdle(15);
 		p.setMinIdle(5);
@@ -61,30 +63,26 @@ public class PrimaryDBConfig {
 		p.setRemoveAbandonedTimeout(600);
 		p.setTestOnBorrow(true);
 		p.setValidationQuery("SELECT 1");
-		org.apache.tomcat.jdbc.pool.DataSource datasource = new org.apache.tomcat.jdbc.pool.DataSource();// use one data
-																											// source by
-																											// removing
-																											// package
+		org.apache.tomcat.jdbc.pool.DataSource datasource = new org.apache.tomcat.jdbc.pool.DataSource();
 		datasource.setPoolProperties(p);
-
+ 
 		datasource.setUsername(ConfigProperties.getPropertyByName("spring.datasource.username"));
 		datasource.setPassword(ConfigProperties.getPropertyByName("spring.datasource.password"));
+ 
 		return datasource;
 	}
 
+	
 	@Primary
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder,
 			@Qualifier("dataSource") DataSource dataSource) {
-		return builder.dataSource(dataSource)
-				.packages("com.iemr.mcts.data", "com.iemr.mcts.data.*", "com.iemr.mcts.data.mapper.*")
-				.persistenceUnit("db_iemr").build();
+		return builder.dataSource(dataSource).packages("com.iemr.mcts.data", "com.iemr.mcts.data.*", "com.iemr.mcts.data.mapper.*").persistenceUnit("db_iemr").build();
 	}
-
 	@Primary
 	@Bean(name = "transactionManager")
 	public PlatformTransactionManager transactionManager(
 			@Qualifier("entityManagerFactory") EntityManagerFactory entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory);
+		return new JpaTransactionManager((jakarta.persistence.EntityManagerFactory) entityManagerFactory);
 	}
 }

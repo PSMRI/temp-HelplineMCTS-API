@@ -29,7 +29,7 @@ import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.tika.exception.TikaException;
 import org.junit.Before;

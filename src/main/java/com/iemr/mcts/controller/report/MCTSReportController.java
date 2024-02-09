@@ -21,7 +21,7 @@
 */
 package com.iemr.mcts.controller.report;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +41,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.iemr.mcts.services.secondaryreport.SecondaryDataReportService;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @CrossOrigin
 @RequestMapping({ "/mctsReportController" })
@@ -53,10 +54,10 @@ public class MCTSReportController {
 	private SecondaryDataReportService secondaryReportService;
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get MCTS data report")
+	@Operation(summary = "Get MCTS data report")
 	@RequestMapping(value = "/getDataReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getDataReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"isMother\":\"Boolean\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"isMother\":\"Boolean\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -76,10 +77,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS call detail report")
+	@Operation(summary = "Get MCTS call detail report")
 	@RequestMapping(value = "/getCallDetailReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getCallDetailReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -99,10 +100,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS unique call detail report")
+	@Operation(summary = "Get MCTS unique call detail report")
 	@RequestMapping(value = "/getCallDetailReportUnique", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getCallDetailReportUnique(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -122,10 +123,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS answered call report")
+	@Operation(summary = "Get MCTS answered call report")
 	@RequestMapping(value = "/getCallAnsweredReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getCallAnsweredReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
 					+ "\"userID\":\"Integer\", \"callTypeName\":\"Answered or Not Answered\"}") @RequestBody String jsonRequest) {
 
 		String filename = null;
@@ -147,10 +148,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS complaint report")
+	@Operation(summary = "Get MCTS complaint report")
 	@RequestMapping(value = "/getComplaintReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getComplaintReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -170,10 +171,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS invalid record report")
+	@Operation(summary = "Get MCTS invalid record report")
 	@RequestMapping(value = "/getInvalidRecordReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getInvalidRecordReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"isMother\":\"Boolean\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"isMother\":\"Boolean\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		{
@@ -196,10 +197,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS unanswered call report")
+	@Operation(summary = "Get MCTS unanswered call report")
 	@RequestMapping(value = "/getCallNotAnsweredReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getCallNotAnsweredReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
 					+ "\"userID\":\"Integer\", \"callTypeName\":\"Answered or Not Answered\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
@@ -220,10 +221,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS high risk report")
+	@Operation(summary = "Get MCTS high risk report")
 	@RequestMapping(value = "/getHighRiskReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getHighRiskReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -243,10 +244,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get MCTS daily report")
+	@Operation(summary = "Get MCTS daily report")
 	@RequestMapping(value = "/getDailyReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getDailyReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", "
 					+ "\"userID\":\"Integer\", \"isMother\":\"Boolean\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
@@ -267,10 +268,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get NHM report")
+	@Operation(summary = "Get NHM report")
 	@RequestMapping(value = "/getNHMReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getNHMReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest) {
 		String filename = null;
 		InputStreamResource file = null;
 		try {
@@ -290,10 +291,10 @@ public class MCTSReportController {
 	}
 
 	@CrossOrigin
-	@ApiOperation(value = "Get congenital anomalies report")
+	@Operation(summary = "Get congenital anomalies report")
 	@RequestMapping(value = "/getCongenitalAnomaliesReport", method = RequestMethod.POST, headers = "Authorization")
 	public ResponseEntity<Object> getCongenitalAnomaliesReport(
-			@ApiParam("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest,
+			@Param("{\"startDate\":\"Timestamp\", \"endDate\":\"Timestamp\", \"providerServiceMapID\":\"Integer \", \"userID\":\"Integer\"}") @RequestBody String jsonRequest,
 			HttpServletRequest httpRequest) {
 		String filename = null;
 		InputStreamResource file = null;

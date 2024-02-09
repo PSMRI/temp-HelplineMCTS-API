@@ -21,9 +21,9 @@
 */
 package com.iemr.mcts.configure;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
+import jakarta.persistence.EntityManagerFactory;
 
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolConfiguration;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -79,6 +79,6 @@ public class SecondaryDBConfig {
 	@Bean(name = "secondaryTransactionManager")
 	public PlatformTransactionManager barTransactionManager(
 			@Qualifier("secondaryEntityManagerFactory") EntityManagerFactory secondaryEntityManagerFactory) {
-		return new JpaTransactionManager(secondaryEntityManagerFactory);
+		return new JpaTransactionManager((jakarta.persistence.EntityManagerFactory)secondaryEntityManagerFactory);
 	}
 }

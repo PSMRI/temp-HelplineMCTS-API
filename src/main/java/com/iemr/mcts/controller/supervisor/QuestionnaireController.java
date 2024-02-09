@@ -36,8 +36,9 @@ import com.iemr.mcts.services.supervisor.MctsQAMappingService;
 import com.iemr.mcts.services.supervisor.QuestionnaireService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("/questionnaireController")
@@ -63,10 +64,10 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Update interaction")
+	@Operation(summary = "Update interaction")
 	@RequestMapping(value = "/edit/interaction", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String editInteraction(
-			@ApiParam("{\"mctsQAMapID\":\"Integer\", \"interaction\":\"String Value\", \"variableName\":\"String-Name \", \"variableDataType\":\"String- Name\"}") @RequestBody String request) {
+			@Param("{\"mctsQAMapID\":\"Integer\", \"interaction\":\"String Value\", \"variableName\":\"String-Name \", \"variableDataType\":\"String- Name\"}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
 			response.setResponse(mctsQAMappingService.updateInteraction(request));
@@ -84,9 +85,9 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Delete interaction")
+	@Operation(summary = "Delete interaction")
 	@RequestMapping(value = "/delete/interaction", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
-	public String deleteInteraction(@ApiParam("{\"mctsQAMapID\":\"Integer\")}") @RequestBody String request) {
+	public String deleteInteraction(@Param("{\"mctsQAMapID\":\"Integer\")}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
 			response.setResponse(mctsQAMappingService.deleteInteraction(request));
@@ -104,9 +105,9 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Fetch interaction list")
+	@Operation(summary = "Fetch interaction list")
 	@RequestMapping(value = "/get/interaction/list", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
-	public String interactionsList(@ApiParam("{\"questionID\":\"Integer\"}") @RequestBody String request) {
+	public String interactionsList(@Param("{\"questionID\":\"Integer\"}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
 			response.setResponse(mctsQAMappingService.interactionsList(request));
@@ -124,10 +125,10 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Edit questionnaire")
+	@Operation(summary = "Edit questionnaire")
 	@RequestMapping(value = "/edit/questionnaire", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String editQuestionnaire(
-			@ApiParam("{\"questionID\":\"Integer\", \"question\":\"String Value\", \"answerType\":\"String-Name \", "
+			@Param("{\"questionID\":\"Integer\", \"question\":\"String Value\", \"answerType\":\"String-Name \", "
 					+ "\"triggerFeedback\":\"Boolean- Value\", \"triggerFeedbackFor\":\"String-Value\", \"showText\":\"Boolean- Value\", \"showTextFor\":\"String-Value\"}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
@@ -150,7 +151,7 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Save interactions")
+	@Operation(summary = "Save interactions")
 	@RequestMapping(value = "/put/interactions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String addInteractions(@RequestBody String request) {
 		OutputResponse response = new OutputResponse();
@@ -170,7 +171,7 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Create outbound questions")
+	@Operation(summary = "Create outbound questions")
 	@RequestMapping(value = "/put/outboundcall/questions", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String createOutBoundQuestions(@RequestBody String request) {
 		OutputResponse response = new OutputResponse();
@@ -192,7 +193,7 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get outbound question list")
+	@Operation(summary = "Get outbound question list")
 	@RequestMapping(value = "/get/questionnaireList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String outboundQuestionList(@RequestBody String request) {
 		OutputResponse response = new OutputResponse();
@@ -214,9 +215,9 @@ public class QuestionnaireController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Delete question")
+	@Operation(summary = "Delete question")
 	@RequestMapping(value = "/delete/question", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
-	public String updateQuestion(@ApiParam("{\"questionID\":\"Integer\"}") @RequestBody String request) {
+	public String updateQuestion(@Param("{\"questionID\":\"Integer\"}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
 			String res = mctsQAMappingService.deleteQuestion(request);
@@ -233,9 +234,9 @@ public class QuestionnaireController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Add derived question")
+	@Operation(summary = "Add derived question")
 	@RequestMapping(value = "derived/addDeriveQuestion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
-	public String deriveQuestion(@ApiParam("{\"questionID\":\"Integer\"}") @RequestBody String request) {
+	public String deriveQuestion(@Param("{\"questionID\":\"Integer\"}") @RequestBody String request) {
 		OutputResponse response = new OutputResponse();
 		try {
 
@@ -253,7 +254,7 @@ public class QuestionnaireController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get agent outbound question list")
+	@Operation(summary = "Get agent outbound question list")
 	@RequestMapping(value = "/get/agentQuestionnaireList", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String outboundQuestionListAgent(@RequestBody String request) {
 		OutputResponse response = new OutputResponse();
@@ -269,7 +270,7 @@ public class QuestionnaireController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Delete multiple questions")
+	@Operation(summary = "Delete multiple questions")
 	@RequestMapping(value = "/delete/multipleQuestion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON, headers = "Authorization")
 	public String deleteMultipleQuestions(@RequestBody String request) {
 		OutputResponse response = new OutputResponse();

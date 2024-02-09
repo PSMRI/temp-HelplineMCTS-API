@@ -23,7 +23,7 @@ package com.iemr.mcts.data.supervisor;
 
 import java.util.List;
 
-import javax.persistence.Transient;
+import jakarta.persistence.Transient;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

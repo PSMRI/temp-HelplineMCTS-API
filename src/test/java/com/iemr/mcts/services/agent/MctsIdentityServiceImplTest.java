@@ -23,7 +23,7 @@ package com.iemr.mcts.services.agent;
 
 import static org.mockito.Mockito.doReturn;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
