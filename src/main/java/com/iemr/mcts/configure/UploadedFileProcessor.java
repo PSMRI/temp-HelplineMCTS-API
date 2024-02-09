@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -144,12 +145,15 @@ public class UploadedFileProcessor {
 
 		List<MctsDataReaderDetail> dataReaderDetails = new ArrayList<MctsDataReaderDetail>();
 
-		String fileName = file.getName();
-		File convFile = new File(fileName);
-		FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 		FileInputStream fileInputStream = null;
 
 		try {
+			String fileName = file.getName();
+			String pattern = "[^a-zA-Z0-9.-]";
+        	String fileName2 = (URI.create(fileName).normalize()).toString();
+        	String sanitizedFile=fileName2.replaceAll(pattern, "");
+			File convFile = new File(sanitizedFile);
+			FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 			fileInputStream = new FileInputStream(convFile);
 			XSSFWorkbook workbook = this.getXSSFWorkbook(fileInputStream);
 			Sheet datatypeSheet = workbook.getSheetAt(0);
@@ -197,12 +201,15 @@ public class UploadedFileProcessor {
 
 		List<ChildValidDataHandler> childDataHandlers = new ArrayList<ChildValidDataHandler>();
 
-		String fileName = file.getName();
-		File convFile = new File(fileName);
-		FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 		FileInputStream fileInputStream = null;
 
 		try {
+			String fileName = file.getName();
+			String pattern = "[^a-zA-Z0-9.-]";
+        	String fileName2 = (URI.create(fileName).normalize()).toString();
+        	String sanitizedFile=fileName2.replaceAll(pattern, "");
+			File convFile = new File(sanitizedFile);
+			FileUtils.writeByteArrayToFile(convFile, file.getBytes());
 			fileInputStream = new FileInputStream(convFile);
 
 			XSSFWorkbook workbook = this.getXSSFWorkbook(fileInputStream);
