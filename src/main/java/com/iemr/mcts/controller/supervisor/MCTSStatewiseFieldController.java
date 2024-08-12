@@ -31,8 +31,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.mcts.services.supervisor.MctsStatewiseFieldsService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("/mctsStatewiseFieldsController")
@@ -45,10 +46,10 @@ public class MCTSStatewiseFieldController {
 	private MctsStatewiseFieldsService mctsStatewiseFieldsService;
 
 	@CrossOrigin
-	@ApiOperation(value = "Get variables based on provider service map id and field")
+	@Operation(summary = "Get variables based on provider service map id and field")
 	@RequestMapping(value = "/get/variablenames", method = RequestMethod.POST, headers = "Authorization")
 	public String getVariables(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\", \"fieldFor\":\"String Name\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\", \"fieldFor\":\"String Name\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 

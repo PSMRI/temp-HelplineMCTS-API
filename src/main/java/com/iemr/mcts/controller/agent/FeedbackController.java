@@ -33,8 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.mcts.services.agent.FeedbackService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("feedbackController")
@@ -49,9 +50,9 @@ public class FeedbackController {
 	private FeedbackService feedbackService;
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get feedback list")
+	@Operation(summary = "Get feedback list")
 	@RequestMapping(value="/complaint/list", method = RequestMethod.POST, headers = "Authorization")
-	public String feedBackList(@ApiParam("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request){
+	public String feedBackList(@Param("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request){
 		logger.info("feedBackList request "+request);
 		OutputResponse response  = new OutputResponse();
 		try{

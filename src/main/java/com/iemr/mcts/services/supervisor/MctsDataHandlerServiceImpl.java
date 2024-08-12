@@ -39,7 +39,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.StreamSupport;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -867,7 +867,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 			mctsOutboundCalllist.add(mctsOutboundCall);
 		}
-		mctsOutboundCallRepository.save(mctsOutboundCalllist);
+		mctsOutboundCallRepository.saveAll(mctsOutboundCalllist);
 		mctsDataHandlerRepository.markIsAllocate(motherValidRecordDetail.getMCTSID_no());
 	}
 
@@ -904,7 +904,7 @@ public class MctsDataHandlerServiceImpl implements MctsDataHandlerService {
 
 			mctsOutboundCalllist.add(mctsOutboundCall);
 		}
-		mctsOutboundCallRepository.save(mctsOutboundCalllist);
+		mctsOutboundCallRepository.saveAll(mctsOutboundCalllist);
 		childDataReaderRepository.markIsAllocate(childValidDataHandler.getMCTSID_no_Child_ID());
 	}
 

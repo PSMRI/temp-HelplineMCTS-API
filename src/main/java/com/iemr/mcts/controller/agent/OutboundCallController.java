@@ -21,7 +21,7 @@
 */
 package com.iemr.mcts.controller.agent;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +36,8 @@ import com.iemr.mcts.services.agent.MctsOutbondCallService;
 import com.iemr.mcts.services.agent.MctsOutboundCallDetailService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(value = "/outbondcallcontroller")
@@ -63,9 +63,9 @@ public class OutboundCallController {
 	 * @return String count of allocated calls
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get count of allocated calls")
+	@Operation(summary = "Get count of allocated calls")
 	@RequestMapping(value = "/put/agentcallallocate", method = RequestMethod.POST, headers = "Authorization")
-	public String agentCallAllocation(@ApiParam("{\"obCallID\":\"Integer\"}") @RequestBody String request) {
+	public String agentCallAllocation(@Param("{\"obCallID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 		try {
@@ -84,10 +84,10 @@ public class OutboundCallController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get count of unallocated calls")
+	@Operation(summary = "Get count of unallocated calls")
 	@RequestMapping(value = "/get/unallocatedcalls", method = RequestMethod.POST, headers = "Authorization")
 	public String getUnallocatedCalls(
-			@ApiParam("{\"callDateFrom\":\"Date\", \"callDateTo\":\"Date\", \"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
+			@Param("{\"callDateFrom\":\"Date\", \"callDateTo\":\"Date\", \"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -107,10 +107,10 @@ public class OutboundCallController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get count of reallocated calls")
+	@Operation(summary = "Get count of reallocated calls")
 	@RequestMapping(value = "/get/reallocated/calls", method = RequestMethod.POST, headers = "Authorization")
 	public String getReallocateCalls(
-			@ApiParam("{\"callDateFrom\":\"Date\", \"callDateTo\":\"Date\", \"userID\":\"Integer\"}") @RequestBody String request) {
+			@Param("{\"callDateFrom\":\"Date\", \"callDateTo\":\"Date\", \"userID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -125,9 +125,9 @@ public class OutboundCallController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Move calls to bucket")
+	@Operation(summary = "Move calls to bucket")
 	@RequestMapping(value = "/move/calls/tobucket", method = RequestMethod.POST, headers = "Authorization")
-	public String moveToBucket(@ApiParam("{\"obCallID\":\"Integer\"}") @RequestBody String request) {
+	public String moveToBucket(@Param("{\"obCallID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -148,7 +148,7 @@ public class OutboundCallController {
 	 * @return String count of allocated calls
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Save details on call closure")
+	@Operation(summary = "Save details on call closure")
 	@RequestMapping(value = "/put/call/closure", method = RequestMethod.POST, headers = "Authorization")
 	public String putCallHistory(@RequestBody String request) {
 		logger.info("putCallHistory request " + request);
@@ -171,9 +171,9 @@ public class OutboundCallController {
 	 * @return String count of allocated calls
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get call history")
+	@Operation(summary = "Get call history")
 	@RequestMapping(value = "/get/call/history", method = RequestMethod.POST, headers = "Authorization")
-	public String getCallHistory(@ApiParam("{\"childID or motherID\":\"Integer\"}") @RequestBody String request) {
+	public String getCallHistory(@Param("{\"childID or motherID\":\"Integer\"}") @RequestBody String request) {
 		logger.info("getCallHistory request " + request);
 		OutputResponse response = new OutputResponse();
 		try {
@@ -194,10 +194,10 @@ public class OutboundCallController {
 	 * @return String next call date
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get next call date")
+	@Operation(summary = "Get next call date")
 	@RequestMapping(value = "/get/next/anc/pnc", method = RequestMethod.POST, headers = "Authorization")
 	public String getNextANC_PNC(
-			@ApiParam("{\"childID or motherID\":\"Integer\", \"outboundCallType\":\"ANC or PNC\"}") @RequestBody String request) {
+			@Param("{\"childID or motherID\":\"Integer\", \"outboundCallType\":\"ANC or PNC\"}") @RequestBody String request) {
 		logger.info("getNextANC_PNC request " + request);
 		OutputResponse response = new OutputResponse();
 		try {
@@ -212,9 +212,9 @@ public class OutboundCallController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get updated record")
+	@Operation(summary = "Get updated record")
 	@RequestMapping(value = "/get/updated/object", method = RequestMethod.POST, headers = "Authorization")
-	public String getUpdatedObject(@ApiParam("{\"obCallID\":\"Integer\"}") @RequestBody String request,
+	public String getUpdatedObject(@Param("{\"obCallID\":\"Integer\"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 
 		OutputResponse response = new OutputResponse();
@@ -235,7 +235,7 @@ public class OutboundCallController {
 	 * @return String High Risk Reason
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get high risk reason")
+	@Operation(summary = "Get high risk reason")
 	@RequestMapping(value = "/getHighRiskReason", method = RequestMethod.POST, headers = "Authorization")
 	public String getHighRiskReason() {
 		logger.info("getHighRiskReason request ");
@@ -257,10 +257,9 @@ public class OutboundCallController {
 	 * @return list of all call worklist
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get mother worklist for given userID")
-	@ApiParam(value = "", required = true)
+	@Operation(summary = "Get mother worklist for given userID")
 	@RequestMapping(value = "/getMotherWorklist", method = RequestMethod.POST, headers = "Authorization")
-	public String getMotherWorklist(@ApiParam("{\"allocatedUserID\":\"Integer\"}") @RequestBody String request) {
+	public String getMotherWorklist(@Param("{\"allocatedUserID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -281,10 +280,9 @@ public class OutboundCallController {
 	 * @return list of all call worklist
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get child worklist for given userID")
-	@ApiParam(value = "", required = true)
+	@Operation(summary = "Get child worklist for given userID")
 	@RequestMapping(value = "/getChildWorklist", method = RequestMethod.POST, headers = "Authorization")
-	public String getChildWorklist(@ApiParam("{\"allocatedUserID\":\"Integer\"}") @RequestBody String request) {
+	public String getChildWorklist(@Param("{\"allocatedUserID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 

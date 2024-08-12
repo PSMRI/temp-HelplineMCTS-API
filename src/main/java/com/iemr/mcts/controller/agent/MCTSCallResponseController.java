@@ -33,8 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.mcts.services.agent.MctsCallResponseService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("mctsCallResponseController")
@@ -54,10 +55,10 @@ public class MCTSCallResponseController {
 	 * @return String count of allocated calls
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Save MCTS call response")
+	@Operation(summary = "Save MCTS call response")
 	@RequestMapping(value = "/put/call/response", method = RequestMethod.POST, headers = "Authorization")
 	public String putMctsCallResponse(
-			@ApiParam("{\"callDetailID\":\"Integer\", \"questionID\":\"Integer\", \"answer\":\"String \", \"remark\":\"String\"}") @RequestBody String request) {
+			@Param("{\"callDetailID\":\"Integer\", \"questionID\":\"Integer\", \"answer\":\"String \", \"remark\":\"String\"}") @RequestBody String request) {
 		logger.info("putMctsCallResponse request " + request);
 		OutputResponse response = new OutputResponse();
 		try {
@@ -72,9 +73,9 @@ public class MCTSCallResponseController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Get MCTS call response")
+	@Operation(summary = "Get MCTS call response")
 	@RequestMapping(value = "get/call/response", method = RequestMethod.POST, headers = "Authorization")
-	public String getMctsCallResponse(@ApiParam("{\"callDetailID\":\"Integer\"}") @RequestBody String request) {
+	public String getMctsCallResponse(@Param("{\"callDetailID\":\"Integer\"}") @RequestBody String request) {
 		logger.info("getMctsCallResponse request " + request);
 		OutputResponse response = new OutputResponse();
 		try {
@@ -89,10 +90,10 @@ public class MCTSCallResponseController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Update MCTS call response")
+	@Operation(summary = "Update MCTS call response")
 	@RequestMapping(value = "update/call/response", method = RequestMethod.POST, headers = "Authorization")
 	public String updateMctsCallResponse(
-			@ApiParam("{\"mctsCallResponseID\":\"Integer\", \"answer\":\"String \", \"remark\":\"String\"}") @RequestBody String request) {
+			@Param("{\"mctsCallResponseID\":\"Integer\", \"answer\":\"String \", \"remark\":\"String\"}") @RequestBody String request) {
 		logger.info("updateMctsCallResponse request " + request);
 		OutputResponse response = new OutputResponse();
 		try {

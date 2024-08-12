@@ -70,7 +70,7 @@ public class MctsDataTransactionServiceImplTest {
 		
 		doReturn(mctsStatewiseFieldsDetail).when(mctsStatewiseFieldsRepository).getAllFields(Mockito.anyLong(),Mockito.anyString());
 		
-		doReturn(mctsDataReaderDetail1).when(mctsDataHandlerRepository).findOne(Mockito.anyLong());
+		doReturn(mctsDataReaderDetail1).when(mctsDataHandlerRepository).findById(Mockito.anyLong());
 		
 		List<DBExcelFieldName> list=Lists.newArrayList();
 		DBExcelFieldName dBExcelFieldName=new DBExcelFieldName();
@@ -92,7 +92,7 @@ public class MctsDataTransactionServiceImplTest {
 		mctsOutboundCall.setOutboundCallType("type");
 		MctsDataReaderDetail mctsDataReaderDetail=new MctsDataReaderDetail();
 		mctsOutboundCall.setMctsDataReaderDetail(mctsDataReaderDetail);
-		doReturn(mctsDataReaderDetail).when(mctsDataHandlerRepository).findOne(Mockito.anyLong());
+		doReturn(mctsDataReaderDetail).when(mctsDataHandlerRepository).findById(Mockito.anyLong());
 		/*try {
 			//String response=mctsDataTransactionServiceImpl.updateData(mctsOutboundCall.toString());
 			//System.out.println(response);

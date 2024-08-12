@@ -21,7 +21,7 @@
 */
 package com.iemr.mcts.controller.agent;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +35,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.iemr.mcts.services.agent.MctsIdentityService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/mctsidentitycontroller")
@@ -50,10 +50,10 @@ public class MCTSIdentityController {
 	private MctsIdentityService mctsIdentityService;
 
 	@CrossOrigin
-	@ApiOperation(value = "Search beneficiary")
+	@Operation(summary = "Search beneficiary")
 	@RequestMapping(value = "/search/beneficiary", method = RequestMethod.POST, headers = "Authorization")
 	public String searchBeneficiaries(
-			@ApiParam("{\"firstName\":\"String\", \"lastName\":\"String \", \"contactNumber\":\"String \"}") @RequestBody String request,
+			@Param("{\"firstName\":\"String\", \"lastName\":\"String \", \"contactNumber\":\"String \"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 		logger.info("searchBeneficiaries request " + request);
 		OutputResponse response = new OutputResponse();
@@ -74,10 +74,10 @@ public class MCTSIdentityController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Create beneficiary")
+	@Operation(summary = "Create beneficiary")
 	@RequestMapping(value = "/create/beneficiary", method = RequestMethod.POST, headers = "Authorization")
 	public String createBeneficiaries(
-			@ApiParam("{\"firstName\":\"String\", \"lastName\":\"String \", \"contactNumber\":\"String \", \"stateID\":\"Integer \", \"districtID\":\"Integer \", "
+			@Param("{\"firstName\":\"String\", \"lastName\":\"String \", \"contactNumber\":\"String \", \"stateID\":\"Integer \", \"districtID\":\"Integer \", "
 					+ "\"createdBy\":\"String \", \"providerServiceMapID\":\"Integer \", \"vanID\":\"Integer \", \"genderID\":\"Integer \"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 
@@ -98,9 +98,9 @@ public class MCTSIdentityController {
 	 * @return
 	 */
 	@CrossOrigin
-	@ApiOperation(value = "Get beneficiary id")
+	@Operation(summary = "Get beneficiary id")
 	@RequestMapping(value = "/get/beneficiaryid", method = RequestMethod.POST, headers = "Authorization")
-	public String getBeneficiaryID(@ApiParam("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request,
+	public String getBeneficiaryID(@Param("{\"beneficiaryRegID\":\"Integer \"}") @RequestBody String request,
 			HttpServletRequest servletRequest) {
 		logger.info("getBeneficiaryID request " + request);
 		OutputResponse response = new OutputResponse();

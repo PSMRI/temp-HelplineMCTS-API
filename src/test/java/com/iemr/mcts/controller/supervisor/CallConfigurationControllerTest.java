@@ -84,7 +84,7 @@ public class CallConfigurationControllerTest {
 		CallConfigurationDetail callConfigurationDetail=new CallConfigurationDetail();
 		callConfigurationDetail.setMctsCallConfigID(new Integer("201"));
 		callConfigurationDetailList.add(callConfigurationDetail);
-		doReturn(callConfigurationDetailList).when(callConfigurationService).updateConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
+		//doReturn(callConfigurationDetailList).when(callConfigurationService).updateConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
 		String response=callConfigurationController.putConfigUpdate(callConfigurationDetailList.toString());
 		assertTrue(response.contains("\"mctsCallConfigID\":201"));
 	}
@@ -94,7 +94,7 @@ public class CallConfigurationControllerTest {
 		List<CallConfigurationDetail> callConfigurationDetailList=Lists.newArrayList();
 		CallConfigurationDetail callConfigurationDetail=new CallConfigurationDetail();
 		callConfigurationDetailList.add(callConfigurationDetail);
-		doReturn(callConfigurationDetailList).when(callConfigurationService).updateConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
+		//doReturn(callConfigurationDetailList).when(callConfigurationService).updateConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
 		String response=callConfigurationController.putConfigUpdate(callConfigurationDetailList.toString());
 		assertFalse(response.contains("\"mctsCallConfigID\":201"));
 	}
@@ -105,7 +105,7 @@ public class CallConfigurationControllerTest {
 		CallConfigurationDetail callConfigurationDetail=new CallConfigurationDetail();
 		callConfigurationDetail.setMctsCallConfigID(new Integer("201"));
 		callConfigurationDetailList.add(callConfigurationDetail);
-		doReturn(callConfigurationDetailList).when(callConfigurationService).createConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
+		//doReturn(callConfigurationDetailList).when(callConfigurationService).createConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
 		String response=callConfigurationController.createConfig(callConfigurationDetailList.toString());
 		assertTrue(response.contains("\"mctsCallConfigID\":201"));
 	}
@@ -115,7 +115,7 @@ public class CallConfigurationControllerTest {
 		List<CallConfigurationDetail> callConfigurationDetailList=Lists.newArrayList();
 		CallConfigurationDetail callConfigurationDetail=new CallConfigurationDetail();
 		callConfigurationDetailList.add(callConfigurationDetail);
-		doReturn(callConfigurationDetailList).when(callConfigurationService).createConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
+		//doReturn(callConfigurationDetailList).when(callConfigurationService).createConfigurations(Mockito.anyListOf(CallConfigurationDetail.class));
 		String response=callConfigurationController.createConfig(callConfigurationDetailList.toString());
 		assertFalse(response.contains("\"mctsCallConfigID\":201"));
 	}

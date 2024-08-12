@@ -26,7 +26,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.tika.exception.TikaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +42,8 @@ import com.iemr.mcts.data.supervisor.FileManager;
 import com.iemr.mcts.services.supervisor.MctsDataHandlerService;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("mctsDataHandlerController")
@@ -56,7 +56,7 @@ public class MCTSDataHandlerController {
 	 * @return string message
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Upload data in MCTS")
+	@Operation(summary = "Upload data in MCTS")
 	@RequestMapping(value = "/mcts/data/upload", method = RequestMethod.POST, headers = "Authorization")
 	public String uploadData(@RequestBody String request, HttpServletRequest servletRequest) {
 
@@ -120,7 +120,7 @@ public class MCTSDataHandlerController {
 	 * @return string message
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Update beneficiary data in MCTS")
+	@Operation(summary = "Update beneficiary data in MCTS")
 	@RequestMapping(value = "/update/beneficiary/data", method = RequestMethod.POST, headers = "Authorization")
 	public String updateBeneficiary(@RequestParam("request") String request) {
 
@@ -138,10 +138,10 @@ public class MCTSDataHandlerController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Upload status in MCTS")
+	@Operation(summary = "Upload status in MCTS")
 	@RequestMapping(value = "/mcts/data/upload/status", method = RequestMethod.POST, headers = "Authorization")
 	public String uploadstatus(
-			@ApiParam("{\"providerServiceMapID\":\"Integer - provider service ID\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer - provider service ID\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 

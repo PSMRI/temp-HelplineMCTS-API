@@ -39,8 +39,9 @@ import com.iemr.mcts.services.supervisor.CallConfigurationService;
 import com.iemr.mcts.utils.mapper.InputMapper;
 import com.iemr.mcts.utils.response.OutputResponse;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.lettuce.core.dynamic.annotation.Param;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("/callConfigurationController")
@@ -57,10 +58,10 @@ public class CallConfigurationController {
 	public static final Logger logger = LoggerFactory.getLogger(CallConfigurationController.class);
 
 	@CrossOrigin()
-	@ApiOperation(value = "Create call number configuration")
+	@Operation(summary = "Create call number configuration")
 	@RequestMapping(value = "/put/confignumbers", method = RequestMethod.POST, headers = "Authorization")
 	public String putConfig(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\", \"createdBy\":\"String- Name\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\", \"createdBy\":\"String- Name\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -81,10 +82,10 @@ public class CallConfigurationController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Update call configuration")
+	@Operation(summary = "Update call configuration")
 	@RequestMapping(value = "/put/configupdate", method = RequestMethod.POST, headers = "Authorization")
 	public String putConfigUpdate(
-			@ApiParam("{\"mctsCallConfigID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\"}") @RequestBody String request) {
+			@Param("{\"mctsCallConfigID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -106,10 +107,10 @@ public class CallConfigurationController {
 	}
 
 	@CrossOrigin()
-	@ApiOperation(value = "Create call configuration")
+	@Operation(summary = "Create call configuration")
 	@RequestMapping(value = "/put/configuration", method = RequestMethod.POST, headers = "Authorization")
 	public String createConfig(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\", \"createdBy\":\"String- Name\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\", \"effectiveFrom\":\"Date\", \"effectiveUpto\":\"Date\", \"createdBy\":\"String- Name\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -137,10 +138,10 @@ public class CallConfigurationController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get outbound call types")
+	@Operation(summary = "Get outbound call types")
 	@RequestMapping(value = "/get/ouboundcalltypes", method = RequestMethod.POST, headers = "Authorization")
 	public String getOutboundCallTypes(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -163,10 +164,10 @@ public class CallConfigurationController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get call configuration list")
+	@Operation(summary = "Get call configuration list")
 	@RequestMapping(value = "/get/configuration/list", method = RequestMethod.POST, headers = "Authorization")
 	public String getCallConfigurationList(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -188,10 +189,10 @@ public class CallConfigurationController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Update call configuration")
+	@Operation(summary = "Update call configuration")
 	@RequestMapping(value = "/put/configuration/update", method = RequestMethod.POST, headers = "Authorization")
 	public String putConfigurationUpdate(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\", \"createdDate\":\"Date\", \"effectiveUpto\":\"Date\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\", \"createdDate\":\"Date\", \"effectiveUpto\":\"Date\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -213,9 +214,9 @@ public class CallConfigurationController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Delete call configuration")
+	@Operation(summary = "Delete call configuration")
 	@RequestMapping(value = "/delete/configuration", method = RequestMethod.POST, headers = "Authorization")
-	public String deleteConfiguration(@ApiParam("{\"mctsCallConfigID\":\"Integer\"}") @RequestBody String request) {
+	public String deleteConfiguration(@Param("{\"mctsCallConfigID\":\"Integer\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 
@@ -238,10 +239,10 @@ public class CallConfigurationController {
 	 * @return
 	 */
 	@CrossOrigin()
-	@ApiOperation(value = "Get call configuration report")
+	@Operation(summary = "Get call configuration report")
 	@RequestMapping(value = "/get/configuration/listForReport", method = RequestMethod.POST, headers = "Authorization")
 	public String getCallConfigurationListForReport(
-			@ApiParam("{\"providerServiceMapID\":\"Integer\"},{\\\"endDate\\\":\\\"TimeStamp\\\"}") @RequestBody String request) {
+			@Param("{\"providerServiceMapID\":\"Integer\"},{\\\"endDate\\\":\\\"TimeStamp\\\"}") @RequestBody String request) {
 
 		OutputResponse response = new OutputResponse();
 

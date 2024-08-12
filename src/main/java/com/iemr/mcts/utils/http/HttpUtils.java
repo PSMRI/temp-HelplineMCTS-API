@@ -45,7 +45,6 @@ import com.sun.jersey.multipart.FormDataMultiPart;
 public class HttpUtils {
 	public static final String AUTHORIZATION = "Authorization";
 	private Logger logger = LoggerFactory.getLogger(this.getClass().getSimpleName());
-	private String server;
 	private RestTemplate rest;
 	private HttpHeaders headers;
 	private HttpStatus status;
@@ -62,7 +61,7 @@ public class HttpUtils {
 		String body;
 		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
-		setStatus(responseEntity.getStatusCode());
+		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
@@ -80,7 +79,7 @@ public class HttpUtils {
 		}
 		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.GET, requestEntity, String.class);
-		setStatus(responseEntity.getStatusCode());
+		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
@@ -89,7 +88,7 @@ public class HttpUtils {
 		String body;
 		HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
 		ResponseEntity<String> responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
-		setStatus(responseEntity.getStatusCode());
+		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
@@ -105,7 +104,7 @@ public class HttpUtils {
 		HttpEntity<String> requestEntity;
 		requestEntity = new HttpEntity<String>(data, headers);
 		responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
-		setStatus(responseEntity.getStatusCode());
+		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}
@@ -148,7 +147,7 @@ public class HttpUtils {
 			requestEntity = new HttpEntity<String>(data, headers);
 			responseEntity = rest.exchange(uri, HttpMethod.POST, requestEntity, String.class);
 		}
-		setStatus(responseEntity.getStatusCode());
+		setStatus((HttpStatus) responseEntity.getStatusCode());
 		body = responseEntity.getBody();
 		return body;
 	}

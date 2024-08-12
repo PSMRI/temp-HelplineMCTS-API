@@ -41,6 +41,7 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.exceptions.OpenXML4JException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -57,14 +58,12 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
-import org.xml.sax.SAXException;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.iemr.mcts.customexception.DateFormatNotMatchException;
 import com.iemr.mcts.customexception.ExcelColumnDataException;
-import com.iemr.mcts.data.supervisor.ChildValidDataHandler;
 import com.iemr.mcts.data.supervisor.MctsDataReaderDetail;
 import com.iemr.mcts.utils.exception.IEMRException;
 import com.iemr.mcts.utils.mapper.InputMapper;
@@ -196,7 +195,7 @@ public class UploadedFileProcessor {
 	 * @throws SAXException
 	 * @throws IEMRException
 	 */
-	public List<ChildValidDataHandler> getChildDataAsList(MultipartFile file, Map<String, String> fieldsMap)
+/*	public List<ChildValidDataHandler> getChildDataAsList(MultipartFile file, Map<String, String> fieldsMap)
 			throws IOException, EncryptedDocumentException, OpenXML4JException, SAXException, IEMRException {
 
 		List<ChildValidDataHandler> childDataHandlers = new ArrayList<ChildValidDataHandler>();
@@ -239,7 +238,7 @@ public class UploadedFileProcessor {
 
 		return childDataHandlers;
 	}
-
+*/
 	/**
 	 * to read mcts data object from each row
 	 * 
@@ -285,7 +284,7 @@ public class UploadedFileProcessor {
 
 					String key = cell.getSheet().getRow(0).getCell(cell.getColumnIndex()).getStringCellValue().trim();
 					try {
-						switch (cell.getCellTypeEnum()) {
+						switch (cell.getCellType()) {
 
 						case STRING:
 							if (cell.getStringCellValue().length() > 0 && !cell.getStringCellValue().equals(" ")
@@ -347,7 +346,7 @@ public class UploadedFileProcessor {
 							}
 
 							else {
-								cell.setCellType(Cell.CELL_TYPE_STRING);
+								cell.setCellType(CellType.STRING);
 								if (!cell.getStringCellValue().trim().equals("NA")) {
 									if (cell.getStringCellValue().length() > 0 && !cell.getStringCellValue().equals(" ")
 											&& fieldsMap.get(key) != null) {

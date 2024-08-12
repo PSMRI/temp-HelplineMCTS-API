@@ -33,11 +33,11 @@ import com.iemr.mcts.data.supervisor.MctsStatewiseFieldsDetail;
 @RestResource(exported = false)
 public interface MctsStatewiseFieldsRepository extends CrudRepository<MctsStatewiseFieldsDetail, Integer> {
 
-	@Query("select ms from MctsStatewiseFieldsDetail ms where ms.providerServiceMapID = :providerServiceMapID "
+	/*@Query("select ms from MctsStatewiseFieldsDetail ms where ms.providerServiceMapID = :providerServiceMapID "
 			+ "and ms.fieldFor in (select fileTypeName from FileTypeDetails where fileTypeId = :fileTypeId)")
 	public MctsStatewiseFieldsDetail getStatewiseFields(
 			@Param("providerServiceMapID") Long providerServiceMapID,
-			@Param("fileTypeId") Long fileTypeId);
+			@Param("fileTypeId") Long fileTypeId);*/
 	
 	@Query("select ms from MctsStatewiseFieldsDetail ms where ms.providerServiceMapID = :providerServiceMapID and ms.fieldFor = :fieldFor")
 	MctsStatewiseFieldsDetail getAllFields(@Param("providerServiceMapID") Long providerServiceMapID, 
